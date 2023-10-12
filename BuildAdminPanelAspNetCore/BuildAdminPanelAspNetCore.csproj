@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\SA\Controllers\FormController.cs" />
+    <Compile Remove="Areas\SA\Controllers\LoginController.cs" />
+    <Compile Remove="Areas\SA\Controllers\ModuleController.cs" />
+    <Compile Remove="Areas\SA\Controllers\RoleController.cs" />
+    <Compile Remove="Areas\SA\Controllers\RoleInFormPermissionController.cs" />
+    <Compile Remove="Areas\SA\Controllers\RoleInSoftwareModuleMappingController.cs" />
+    <Compile Remove="Areas\SA\Controllers\SoftwareController.cs" />
+    <Compile Remove="Areas\SA\Controllers\UserBuyerMappingController.cs" />
+    <Compile Remove="Areas\SA\Controllers\UserInRoleController.cs" />
     <Compile Remove="Controllers\FormController.cs" />
     <Compile Remove="Controllers\ModuleController.cs" />
     <Compile Remove="Controllers\RoleController.cs" />
@@ -15,13 +24,13 @@
     <Compile Remove="Controllers\SoftwareController.cs" />
     <Compile Remove="Controllers\UserBuyerMappingController.cs" />
     <Compile Remove="Controllers\UserInRoleController.cs" />
-    <Compile Remove="Models\DAL\DAO\ModuleDAO.cs" />
-    <Compile Remove="Models\DAL\DAO\RoleDAO.cs" />
-    <Compile Remove="Models\DAL\DAO\RoleInFormDAO.cs" />
-    <Compile Remove="Models\DAL\DAO\RoleInSoftwareModuleDAO.cs" />
-    <Compile Remove="Models\DAL\DAO\SoftwareDAO.cs" />
-    <Compile Remove="Models\DAL\DAO\UserInFormDAO.cs" />
-    <Compile Remove="Models\DAL\DAO\UserInRoleDAO.cs" />
+    <Compile Remove="Areas\SA\Models\DAL\DAO\ModuleDAO.cs" />
+    <Compile Remove="Areas\SA\Models\DAL\DAO\RoleDAO.cs" />
+    <Compile Remove="Areas\SA\Models\DAL\DAO\RoleInFormDAO.cs" />
+    <Compile Remove="Areas\SA\Models\DAL\DAO\RoleInSoftwareModuleDAO.cs" />
+    <Compile Remove="Areas\SA\Models\DAL\DAO\SoftwareDAO.cs" />
+    <Compile Remove="Areas\SA\Models\DAL\DAO\UserInFormDAO.cs" />
+    <Compile Remove="Areas\SA\Models\DAL\DAO\UserInRoleDAO.cs" />
     <Compile Remove="Universal\DAO\LoginRegistrationDAO.cs" />
     <Compile Remove="Universal\Gateway\DBConnection.cs" />
     <Compile Remove="Universal\Gateway\DBHelper.cs" />
@@ -39,27 +48,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\SA\Controllers\" />
+    <Folder Include="Areas\SA\Data\" />
     <Folder Include="Universal\DAO\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Form\frmForm.cshtml" />
+    <None Include="Areas\SA\Views\Form\frmForm.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\LoginRegistration\Login.cshtml" />
-    <None Include="Views\Module\frmModule.cshtml" />
-    <None Include="Views\RoleInFormPermission\frmRoleInFormPermission.cshtml" />
-    <None Include="Views\RoleInSoftwareModuleMapping\frmRoleInSoftwareModuleMapping.cshtml" />
-    <None Include="Views\Role\frmRole.cshtml" />
+    <None Include="Areas\SA\Views\Module\frmModule.cshtml" />
+    <None Include="Areas\SA\Views\RoleInFormPermission\frmRoleInFormPermission.cshtml" />
+    <None Include="Areas\SA\Views\RoleInSoftwareModuleMapping\frmRoleInSoftwareModuleMapping.cshtml" />
+    <None Include="Areas\SA\Views\Role\frmRole.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_Layout_Login.cshtml" />
     <None Include="Views\Shared\_Loader.cshtml" />
     <None Include="Views\Shared\_LogoutModal.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
-    <None Include="Views\Software\frmSoftware.cshtml" />
-    <None Include="Views\UserBuyerMapping\frmUserBuyerMapping.cshtml" />
-    <None Include="Views\UserInRole\frmUserInRole.cshtml" />
+    <None Include="Areas\SA\Views\Software\frmSoftware.cshtml" />
+    <None Include="Areas\SA\Views\UserBuyerMapping\frmUserBuyerMapping.cshtml" />
+    <None Include="Areas\SA\Views\UserInRole\frmUserInRole.cshtml" />
     <None Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
 

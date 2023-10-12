@@ -1,4 +1,4 @@
-﻿using BuildAdminPanelAspNetCore.Models.DAL.DAO;
+﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -6,24 +6,23 @@ using Systems.Universal;
 
 namespace BuildAdminPanelAspNetCore.Controlles
 {
-    [Route("home")]
+    //[Route("home")]
     public class HomeController : Controller
     {
         DataBaseConnection dbConn = new DataBaseConnection();
         SaHelper saHelper = new SaHelper();
-        FormDAO primaryDAO = new FormDAO();
         private readonly IHttpContextAccessor _httpContextAccessor;
         public HomeController(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        [Route("index")]
+        //[Route("index")]
         //[Route("~/")]
         public IActionResult Index()
         {
             return View();
         }
-        [Route("GetForm")]
+        //[Route("GetForm")]
         [HttpPost]
         public ActionResult GetForm(string FormName)
         {
@@ -39,7 +38,7 @@ namespace BuildAdminPanelAspNetCore.Controlles
             HttpContext.Session.SetString("RefID", refId);
             return new JsonResult(Data);
         }
-        [Route("LoadMenu")]
+        //[Route("LoadMenu")]
         public ActionResult LoadMenu(int? id)
         {
             string userId = HttpContext.Session.GetString("UserID");

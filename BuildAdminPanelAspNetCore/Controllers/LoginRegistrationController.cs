@@ -8,7 +8,7 @@ using Systems.Universal;
 
 namespace BuildAdminPanelAspNetCore.Controllers
 {
-    [Route("LoginRegistration")]
+    //[Route("LoginRegistration")]
    
     public class LoginRegistrationController : Controller
     {
@@ -22,13 +22,13 @@ namespace BuildAdminPanelAspNetCore.Controllers
 
         ////SaPermission saPermission = new SaPermission();
         //SaOwnerData saOwnerData = new SaOwnerData();
-        [Route("Login")]
-        [Route("~/")]
+        //[Route("Login")]
+        //[Route("~/")]
         public IActionResult Login()
         {
             return View();
         }
-        [Route("CheckUser")]
+        //[Route("CheckUser")]
         [HttpPost]
         public ActionResult CheckUser(LoginRegistrationModel master)
         {
