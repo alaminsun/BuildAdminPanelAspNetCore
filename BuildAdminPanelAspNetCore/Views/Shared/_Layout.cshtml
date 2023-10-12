@@ -1,0 +1,449 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Dashboard</title>
+
+    @*    <style>
+        /*        li {
+                  margin-bottom: 15px;
+                }*/
+                li.pointer {
+                  cursor: pointer;
+                }
+        /*        li:hover {
+                  background-color: #ccc;
+                }*/
+            </style>*@
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/admin/plugins/fontawesome-free/css/all.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="~/admin/plugins/toastr/toastr.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="~/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    @*<link href="~/css/CustomCSS/animate.css" rel="stylesheet" />
+    <link href="~/css/CustomCSS/GroupPanel.css" rel="stylesheet" />*@
+    @*<link href="~/css/CustomCSS/toastr.css" rel="stylesheet" />*@
+    <!-- iCheck -->
+    <link rel="stylesheet" href="~/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/admin/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="~/admin/plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/admin/dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="~/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/admin/plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/admin/plugins/summernote/summernote-bs4.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+@*    <link href="~/admin/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/admin/plugins/jquery-ui/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="~/admin/plugins/jquery-ui/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/admin/plugins/jquery-ui/jquery-ui.theme.min.css" rel="stylesheet" />
+    <link href="~/admin/plugins/jquery-ui/jquery-ui.theme.css" rel="stylesheet" />*@
+    <link href="~/admin/plugins/jquery-ui/jquery-ui.css" rel="stylesheet" />
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="~/admin/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+        </div>
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Navbar Search -->
+                @*<li class="nav-item">
+                        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        <div class="navbar-search-block">
+                            <form class="form-inline">
+                                <div class="input-group input-group-sm">
+                                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-navbar" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                        <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
+                            <i class="fas fa-th-large"></i>
+                        </a>
+                    </li>*@
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="../Design/#" id="userDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <img class="img-profile rounded-circle" src="/img/boy.png" style="max-width: 30px">
+                        @*<img src="/admin/dist/img/avatar.png" class="img-profile rounded-circle" style="max-width: 60px" alt="User Image">*@
+                        <span class="ml-2 d-none d-lg-inline text-white small" id="userName">User</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="../Design/#">
+                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Profile
+                        </a>
+                        <a class="dropdown-item" href="../Design/#">
+                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Settings
+                        </a>
+                        <a class="dropdown-item" href="../Design/#">
+                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Activity Log
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/Security/Login/Logout">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout
+                        </a>
+
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div class="main-sidebar">
+            <!-- Inner sidebar -->
+            <div class="sidebar">
+                <!-- user panel (Optional) -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="~/Content/Images/Square_Logo.png" class="img-square" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        @*<p>@Session["DeUserID"]</p>*@
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div><!-- /.user-panel -->
+                <!-- Search Form (Optional) -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" readonly placeholder="" />
+                        <span class="input-group-btn">
+                            <!-- <source src="~/Media/VideoFile.mp4" type="video/mp4">  <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>-->
+                        </span>
+                    </div>
+                    @*<video  width="204" height="130" controls>
+                    <source src="~/Home/Getvideo" type="video/mp4">
+                    </video>*@
+                </form><!-- /.sidebar-form -->
+                <!-- Sidebar Menu -->
+
+                <ul class="sidebar-menu" style="background-color:#FFFFFF">
+                    <li class="active treeview">
+                        <!-- add in line css for white color -->
+                        <a href="#" class="bg-gray-active">
+                            <i class="glyphicon glyphicon-picture"></i> <span>Menu Navigation</span> <i class="fa fa-angle-left pull-right "></i>
+                        </a>
+                        <ul class="treeview-menu" id="MenuItem"></ul>
+                    </li>
+                </ul>
+            </div><!-- /.sidebar -->
+        </div><!-- /.main-sidebar -->
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>@ViewBag.PageHeader</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">@ViewBag.Direction</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+            <section class="content">
+                <div class="container-fluid">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+
+                    </main>
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 3.2.0
+            </div>
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="~/admin/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/admin/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+@*    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>*@
+    <!-- Bootstrap 4 -->
+    <script src="~/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Toastr -->
+    <!--<script src="~/admin/plugins/plugins/toastr/toastr.min.js"></script>-->
+    <!-- ChartJS -->
+    <script src="~/admin/plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/admin/plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="~/admin/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/admin/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="~/admin/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="~/admin/plugins/moment/moment.min.js"></script>
+    <script src="~/admin/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="~/admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="~/admin/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="~/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- jquery-validation -->
+    <script src="~/admin/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/admin/plugins/jquery-validation/additional-methods.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <!-- Toastr -->
+    <script src="~/admin/plugins/toastr/toastr.min.js"></script>
+    <!-- Select2 -->
+    <script src="~/admin/plugins/select2/js/select2.full.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/admin/dist/js/adminlte.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    @*<script src="~/admin/dist/js/demo.js"></script>*@
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/admin/dist/js/pages/dashboard.js"></script>
+    <script src="~/admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="~/admin/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/admin/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/admin/plugins/jszip/jszip.min.js"></script>
+    <script src="~/admin/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/admin/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/admin/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script src="~/js/CustomJS/AccessPermission.js"></script>
+    <script src="~/js/CustomJS/DataBind.js"></script>
+    @*<script src="~/js/CustomJS/GridAction.js"></script>*@
+    <script src="~/js/CustomJS/InputValidator.js"></script>
+    <script src="~/js/CustomJS/OperationalMessage.js"></script>
+    @*<script src="~/js/CustomJS/PopupWindow.js"></script>*@
+    <script src="~/js/CustomJS/ResetText.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+
+        //$("#MenuItem").on("click", ".treeview-menu .treeview-menu .treeview", function (e) {
+        //    var MenuName = $(this).contents().filter(function () {
+        //        return !!$.trim(this.innerHTML || this.data);
+        //    }).first().text();
+        //    alert(MenuName);
+        //    //$('#lblFormName').html(MenuName);
+
+        //    $.ajax({
+        //        url: "/Home/GetForm",
+        //        type: 'POST',
+        //        data: JSON.stringify({ FormName: MenuName }),
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "JSON",
+        //        success: function (data) {
+        //            if (data != "") {
+        //                //$('#lblFormName').html(data);
+        //            }
+
+        //        }
+        //    }); //End of ajax call
+        //    // localStorage['FormName'] = categoryName;
+        //});
+
+        $(document).ready(function () {
+            // Attach a click event handler to the button with ID "myButton"
+            $('#MenuItem,.treeview-menu .treeview-menu .treeview').click(function () {
+                //alert('Button with ID "myButton" clicked!');
+                // Add your logic here for what should happen when the button is clicked
+            var MenuName = $(this).contents().filter(function () {
+                return !!$.trim(this.innerHTML || this.data);
+            }).first().text();
+            //$('#lblFormName').html(MenuName);
+
+            $.ajax({
+                url: "/Home/GetForm",
+                type: 'POST',
+                data: JSON.stringify({ FormName: MenuName }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "JSON",
+                success: function (data) {
+                    if (data != "") {
+                        //$('#lblFormName').html(data);
+                    }
+
+                }
+            }); //End of ajax call
+            // localStorage['FormName'] = categoryName;
+            });
+        });
+
+
+        debugger
+        function buildMenu(divId, items) {
+            console.log(divId)
+            console.log(items)
+            $.each(items, function (i, data) {
+                var li = $('<li class="treeview"><a href="' + this.formURL + '" ><i class="' + this.menuImage + '"></i><span>' + this.menuName + '</span></a>');
+                li.appendTo(divId);
+                if (this.menuItemList && this.menuItemList.length > 0) {
+                    var ul = $('<ul class="treeview-menu"></ul>');
+                    ul.appendTo(li);
+                    buildMenu(ul, this.menuItemList);
+                }
+            });
+        }
+
+        $.ajax({
+            url: "/Home/LoadMenu",
+            method: 'GET',
+            dataType: "JSON",
+            success: function (data) {
+                console.log(data)
+                buildMenu($('#MenuItem'), data);
+            }
+        });
+
+        // $("#divProduct").slideUp(2000).slideDown(2000);
+        //window.addEventListener('beforeunload', applicationCloseTime);
+        //function applicationCloseTime() {
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/Home/AppCloseTime"
+        //    });
+        //}
+
+        $("input[type=text]").focus(function () {
+            ClearBorderRequiredMsg();
+        });
+        //$(document).click(function (e) {
+        //    alert("Okay");
+        //});
+        $("select").on("click", function () {
+            ClearBorderRequiredMsg();
+        });
+        $("textarea").on("click", function () {
+            ClearBorderRequiredMsg();
+        });
+        //This code is ok and can paste from another
+        $(document).on("input", ".numeric", function () {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+        //$("#ToDate").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
+        //$("#FromDate").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
+
+        var changeAny = 0;
+        var currentDate = new Date();
+        var dateInmmddyyyy = (currentDate.getDate() + 1) + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
+        //$(".date").datepicker({ changeMonth: true, changeYear: true, dateFormat: 'dd-mm-yy' }).datepicker('setDate', new Date());
+        $(".addOneDay").datepicker({ changeMonth: true, changeYear: true, dateFormat: 'dd-mm-yy' }).datepicker('setDate', dateInmmddyyyy);
+        $(".dateWithoutImg").datepicker({ changeMonth: true, changeYear: true, dateFormat: 'dd-mm-yy' });
+        $(".dateWithImg").datepicker({ prevText: "<", nextText: ">", changeMonth: true, changeYear: true, showOn: 'both', buttonImage: 'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif', buttonImageOnly: true, showAnim: 'slideDown', duration: 'fast', dateFormat: 'dd/mm/yy' });
+
+        if ('@ViewBag.PageAccess' == "P") {
+            $("#divFirst").show();
+            $("#divSecond").hide();
+            $("#divSecondTitle").hide();
+            $("#divThird").hide();
+            $("#divThirdTitle").hide();
+        }
+        else {
+            $("#divFirst").show();
+            $("#divSecond").show();
+            $("#divSecondTitle").show();
+            $("#divThird").show();
+            $("#divThirdTitle").show();
+        }
+        //Date picker
+        $('.date').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+
+        $(function () {
+            bsCustomFileInput.init();
+        });
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
+
+</body>
+</html>
+

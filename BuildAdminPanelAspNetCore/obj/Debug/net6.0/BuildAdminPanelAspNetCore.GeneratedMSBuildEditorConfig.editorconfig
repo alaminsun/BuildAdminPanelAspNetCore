@@ -1,0 +1,96 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = BuildAdminPanelAspNetCore
+build_property.RootNamespace = BuildAdminPanelAspNetCore
+build_property.ProjectDir = G:\Project\BuildAdminPanelAspNetCore\BuildAdminPanelAspNetCore\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = G:\Project\BuildAdminPanelAspNetCore\BuildAdminPanelAspNetCore
+build_property._RazorSourceGeneratorDebug = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Areas/Admin/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Form/frmForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVxmcm1Gb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/LoginRegistration/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5SZWdpc3RyYXRpb25cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Module/frmModule.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kdWxlXGZybU1vZHVsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/RoleInFormPermission/frmRoleInFormPermission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUluRm9ybVBlcm1pc3Npb25cZnJtUm9sZUluRm9ybVBlcm1pc3Npb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/RoleInSoftwareModuleMapping/frmRoleInSoftwareModuleMapping.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUluU29mdHdhcmVNb2R1bGVNYXBwaW5nXGZybVJvbGVJblNvZnR3YXJlTW9kdWxlTWFwcGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Role/frmRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxmcm1Sb2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Shared/_Layout_Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRfTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Shared/_Loader.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2FkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Shared/_LogoutModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dvdXRNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Software/frmSoftware.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29mdHdhcmVcZnJtU29mdHdhcmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/UserBuyerMapping/frmUserBuyerMapping.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckJ1eWVyTWFwcGluZ1xmcm1Vc2VyQnV5ZXJNYXBwaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/UserInRole/frmUserInRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckluUm9sZVxmcm1Vc2VySW5Sb2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = X1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/wwwroot/Templates/EmailTemplate/AccountVerification_EmailTemplate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = d3d3cm9vdFxUZW1wbGF0ZXNcRW1haWxUZW1wbGF0ZVxBY2NvdW50VmVyaWZpY2F0aW9uX0VtYWlsVGVtcGxhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/wwwroot/Templates/ReportTemplate/ReportTemplate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = d3d3cm9vdFxUZW1wbGF0ZXNcUmVwb3J0VGVtcGxhdGVcUmVwb3J0VGVtcGxhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
