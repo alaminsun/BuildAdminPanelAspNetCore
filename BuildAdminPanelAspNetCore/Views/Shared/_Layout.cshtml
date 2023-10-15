@@ -153,10 +153,8 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <p>Level 1</p>
-                            </a>
+                            <ul class="treeview-menu" id="MenuItem"></ul>
+                           
                         </li>
  @*                       <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -355,43 +353,77 @@
         //    // localStorage['FormName'] = categoryName;
         //});
 
-        $(document).ready(function () {
-            // Attach a click event handler to the button with ID "myButton"    
-            $('#MenuItem,.treeview-menu .treeview-menu .treeview').click(function () {
-                //alert('Button with ID "myButton" clicked!');
-                // Add your logic here for what should happen when the button is clicked
+        $("#MenuItem").on("click", ".treeview-menu .treeview-menu .treeview", function (e) {
+            //// Access the clicked element using e.target
+            //var clickedElement = $(e.target);
+
+            //// Do something with the clicked element
+            //clickedElement.addClass("active");
+            //alert('ok');
+            //// Prevent the default behavior of the click event
+            //e.preventDefault();
             var MenuName = $(this).contents().filter(function () {
                 return !!$.trim(this.innerHTML || this.data);
             }).first().text();
+
             //$('#lblFormName').html(MenuName);
 
-            $.ajax({
+                $.ajax({
                     url: '/Home/GetForm?FormName=' + MenuName,
-                type: 'POST',
-                data: JSON.stringify({ FormName: MenuName }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "JSON",
-                success: function (data) {
-                    if (data != "") {
-                        //$('#lblFormName').html(data);
-                    }
+                    type: 'POST',
+                    //data: JSON.stringify({ FormName: MenuName }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    success: function (data) {
+                        if (data != "") {
+                            //$('#lblFormName').html(data);
+                        }
 
-                }
-            }); //End of ajax call
-            // localStorage['FormName'] = categoryName;
-            });
+                    }
+                }); //End of ajax call
         });
 
 
-        debugger
+        //$(document).ready(function () {
+        //    // Attach a click event handler to the button with ID "myButton"    
+        //    $('#MenuItem').click(function () {
+        //    //$("#MenuItem").on("click", ".treeview-menu .treeview-menu .treeview", function (e) {
+        //        //alert('Button with ID "myButton" clicked!');
+        //        // Add your logic here for what should happen when the button is clicked
+        //        //var label1 = $("#label1").text();
+        //        //alert(label1);
+        //        //var menuItemText = $(this).text().trim();
+        //    var MenuName = $(this).contents().filter(function () {
+        //        return !!$.trim(this.innerHTML || this.data);
+        //    }).first().text();
+        //    //$('#lblFormName').html(MenuName);
+        //        //alert(MenuName);
+
+        //    $.ajax({
+        //        url: '/Home/GetForm?FormName=' + MenuName,
+        //        type: 'POST',
+        //        //data: JSON.stringify({ FormName: MenuName }),
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "JSON",
+        //        success: function (data) {
+        //            if (data != "") {
+        //                //$('#lblFormName').html(data);
+        //            }
+
+        //        }
+        //    }); //End of ajax call
+        //    // localStorage['FormName'] = categoryName;
+        //    });
+        //});
+
+
+        
         function buildMenu(divId, items) {
-            console.log(divId)
-            console.log(items)
             $.each(items, function (i, data) {
-                var li = $('<li class="nav-item"><a href="' + this.formURL + '" class="nav-link" ><i class="' + this.menuImage + '"></i><span>' + this.menuName + '</span></a>');
+                var li = $('<li class="nav-item treeview"><a href="' + this.formURL + '" class="nav-link" ><i class="' + this.menuImage + '"></i><span>' + this.menuName + '</span></a>');
                 li.appendTo(divId);
                 if (this.menuItemList && this.menuItemList.length > 0) {
-                    var ul = $('<ul class="nav nav-treeview"></ul>');
+                    var ul = $('<ul class="nav nav-treeview treeview-menu"></ul>');
                     ul.appendTo(li);
                     buildMenu(ul, this.menuItemList);
                 }

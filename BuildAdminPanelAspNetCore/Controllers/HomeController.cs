@@ -60,7 +60,7 @@ namespace BuildAdminPanelAspNetCore.Controlles
             //            " WHEN LENGTH(RefID)<LENGTH(UserID)+8  THEN SUBSTR(RefID,1,4) " +
             //            " END)  As Parent " +
             //            " FROM Sa_Menu m,Sa_Software d Where SUBSTR(m.RefID,0,2)=d.SoftwareID and UserID='" + UserID + "'  Order By NodeLevel,SL";
-            string Qry = "SELECT ID, NodeName, "+
+            string Qry = "SELECT distinct ID, NodeName, " +
    " CASE "+
    "	WHEN SUBSTRING(FormURL, 1, 3) = 'frm' "+
    "   THEN SUBSTRING(FormURL, 4, LEN(FormURL) - 3) "+
