@@ -1,13 +1,17 @@
+using BuildAdminPanelAspNetCore.ActionFilter;
+using Microsoft.CodeAnalysis.Options;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 //builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddTransient<ActionAuth>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/LoginRegistration/Login";
-    options.LogoutPath = "/LoginRegistration/Logout";
-    options.AccessDeniedPath = "/LoginRegistration/AccessDenied";
+    options.LoginPath = "/SA/LoginRegistration/Login";
+    options.LogoutPath = "/SA/LoginRegistration/Logout";
+    options.AccessDeniedPath = "/SA/LoginRegistration/AccessDenied";
 
 });
 
@@ -42,12 +46,42 @@ app.MapRazorPages();
 //app.MapControllerRoute(
 //    name: "default",
 //    pattern: "{controller=LoginRegistration}/{action=Login}/{id?}");
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//        name: "default",
+//        pattern: "{controller=Home}/{action=Index}/{id?}");
+//});
 app.UseEndpoints(endpoints =>
 {
+    //endpoints.MapAreaControllerRoute(
+    // name: "Inventory",
+    // areaName: "Inventory",
+
+    // pattern: "Inventory/{controller=FGReceive}/{action=ReceiveFromProduction}");
+    //endpoints.MapAreaControllerRoute(
+    //  name: "SalesAndDistribution",
+    //  areaName: "SalesAndDistribution",
+
+    //  pattern: "SalesAndDistribution/{controller=Division}/{action=DivisionInfo}");
+    //endpoints.MapAreaControllerRoute(
+    //  name: "Security",
+    //  areaName: "Security",
+    //  pattern: "Security/{controller=Login}/{action=Index}");
+
+    //endpoints.MapControllerRoute(
+    //    name: "default",
+    //    pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapAreaControllerRoute(
+      name: "areaRoute",
+      areaName: "SA",
+      pattern: "{area}/{controller}/{action}/{id?}",
+      defaults: new { area = "SA", controller = "LoginRegistration", action = "Login" });
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=LoginRegistration}/{action=Login}/{id?}");
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 });
+
 
 app.Run();
 

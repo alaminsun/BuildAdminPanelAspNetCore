@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\SA\Controllers\FormController.cs" />
     <Compile Remove="Areas\SA\Controllers\LoginController.cs" />
     <Compile Remove="Areas\SA\Controllers\ModuleController.cs" />
     <Compile Remove="Areas\SA\Controllers\RoleController.cs" />
@@ -48,15 +47,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\SA\Controllers\" />
     <Folder Include="Areas\SA\Data\" />
     <Folder Include="Universal\DAO\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Areas\SA\Views\Form\frmForm.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\LoginRegistration\Login.cshtml" />
+    <None Include="Areas\SA\Views\LoginRegistration\Login.cshtml" />
     <None Include="Areas\SA\Views\Module\frmModule.cshtml" />
     <None Include="Areas\SA\Views\RoleInFormPermission\frmRoleInFormPermission.cshtml" />
     <None Include="Areas\SA\Views\RoleInSoftwareModuleMapping\frmRoleInSoftwareModuleMapping.cshtml" />

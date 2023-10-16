@@ -1,39 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using RMS_Square.Areas.SA.Models.BEL;
-using RMS_Square.Areas.SA.Models.DAL.DAO;
-using System.Data;
-using System.Data.OracleClient;
-using RMS_Square.DAL.Gateway;
-using Systems.ActionFilter;
+﻿
 
-namespace RMS_Square.Areas.SA.Controllers
+using BuildAdminPanelAspNetCore.ActionFilter;
+using BuildAdminPanelAspNetCore.Models.BEL;
+using BuildAdminPanelAspNetCore.Models.DAL.DAO;
+using Microsoft.AspNetCore.Mvc;
+using Systems.Universal;
+
+namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {
+    [Area("SA")]
+    [Route("SA/Form")]
     public class FormController : Controller
     {
-        DBConnection dbConn = new DBConnection();
+        DataBaseConnection dbConn = new DataBaseConnection();
         FormDAO primaryDAO = new FormDAO();
         // GET: /SA/Form/
-        [ActionAuth]
-        public ActionResult frmForm()
+        //[ActionAuth]
+        //[Route("frmForm")]
+        [Route("frmForm")]
+        //[Route("~/")]
+        public IActionResult frmForm()
         {
-            if (Session["UserID"] != null)
+            if (HttpContext.Session.GetString("UserID") != null)
             {
                 return View();
             }
             return Redirect(string.Format("~/Home/frmHome"));
+
+            //return View();
         }
 
-
-        [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult GetForm()
-        {
-            var data = primaryDAO.GetFormList();
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
+        //[HttpGet]
+        //public ActionResult GetForm()
+        //{
+        //    var data = primaryDAO.GetFormList();
+        //    return new JsonResult(data);
+        //}
 
 
 
@@ -63,6 +65,6 @@ namespace RMS_Square.Areas.SA.Controllers
             }
 
 
-        }     
-	}
+        }
+    }
 }
