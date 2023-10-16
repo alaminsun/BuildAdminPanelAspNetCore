@@ -4,44 +4,86 @@
     ViewData["Title"] = "frmForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>frmForm</h1>
-
-<h4>FormBEL</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="frmForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FormID" class="control-label"></label>
-                <input asp-for="FormID" class="form-control" />
-                <span asp-validation-for="FormID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FormName" class="control-label"></label>
-                <input asp-for="FormName" class="form-control" />
-                <span asp-validation-for="FormName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FormURL" class="control-label"></label>
-                <input asp-for="FormURL" class="form-control" />
-                <span asp-validation-for="FormURL" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<button class="btn btn-md btn-success m-2" id="btnAddCompany">Add Company</button>
+<div class="card">
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="companyList" class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr class="text-center">
+                    @* <th>SlNo</th>*@
+                    <th>Company Id</th>
+                    <th>Company Name</th>
+                    <th>Short Name</th>
+                    <th>Address 1</th>
+                    <th>Address 2</th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="text-center" id="table_data"></tbody>
+        </table>
     </div>
+    <!-- /.card-body -->
 </div>
+@*-----End Table-----*@
+@*----------------------Start Modal-------------------------*@
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="modal fade modal" id="CompanyModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="text-info modal-title" id="companyHeading">Add Company</h1>
+                <button class="close text-danger" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="companyForm" method="post" enctype="multipart/form-data">
+                    <div class="card card-default">
+
+                        <div class="card-body">
+
+                            <div class="form-row">
+                                <div class="form-group" id="compId">
+                                    <label>Id</label>
+                                    <input type="text" class="form-control" id="COMPANY_ID" disabled="disabled" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="COMPANY_NAME" class="col-form-label">Company Name</label>
+                                    <input type="text" id="COMPANY_NAME" name="COMPANY_NAME" class="form-control" placeholder="Enter COMPANY_NAME">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="COMPANY_SHORT_NAME" class="col-form-label">Company Short Name</label>
+                                    <input type="text" id="COMPANY_SHORT_NAME" name="COMPANY_SHORT_NAME" class="form-control" placeholder="Enter COMPANY_ID">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="COMPANY_ADDRESS1" class="col-form-label">Company Address 1</label>
+                                    <input type="text" class="form-control" id="COMPANY_ADDRESS1" name="COMPANY_ADDRESS1" placeholder="Enter Company Address 1" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="COMPANY_ADDRESS2" class="col-form-label">Company Address 2</label>
+                                    <input type="text" class="form-control" id="COMPANY_ADDRESS2" name="COMPANY_ADDRESS2" placeholder="Enter Company Address 2" />
+                                </div>
+                            </div>
+
+                        </div>
+                        @*               <div class="card-footer">
+                        @*<button type="submit" id="success" class="btn btn-primary" asp-controller="BillTracking" asp-action="Create">Submit</button>*@
+                        @*<button type="button" id="success" class="btn btn-primary" onclick="Save()">Submit</button>*@
+                        @*<button type="button" id="btnsubmit" class="btn btn-primary">Submit</button>
+                        </div>*@
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="AddCompany" onclick="AddCompany()">Save</button>
+                <button class="btn btn-warning" onclick="UpdateCompany()" style="display:none" id="btnUpdate">Update</button>
+                <button type="button" class="btn btn-danger btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
