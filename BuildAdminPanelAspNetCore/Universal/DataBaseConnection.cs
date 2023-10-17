@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 
-namespace Systems.Universal
+namespace BuildAdminPanelAspNetCore.Universal
 {
     public class DataBaseConnection
     {

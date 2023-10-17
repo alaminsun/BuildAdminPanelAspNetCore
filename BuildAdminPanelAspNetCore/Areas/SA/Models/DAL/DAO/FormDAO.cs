@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using BuildAdminPanelAspNetCore.Models.BEL;
+﻿
+using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
 using BuildAdminPanelAspNetCore.Universal;
-
-using Systems.Universal;
+using System.Data;
 
 namespace BuildAdminPanelAspNetCore.Models.DAL.DAO
 {
@@ -72,5 +67,42 @@ namespace BuildAdminPanelAspNetCore.Models.DAL.DAO
                     }).ToList();
             return item;
         }
+
+        //public FormBEL GetForm(int? id)
+        //{
+            
+
+        //    var fromdto = new FormBEL { 
+        //        FormID = id.ToString(),
+        //        FormName = row["FormID"].ToString(),
+        //    }
+            
+
+        //}
+
+        public FormBEL GetForm(int? id)
+        {
+            //DataTable companyData = await GetCompanyByIdDataTable(db, id);
+            string Qry = "SELECT FormID,FormName,FormURL,IsActive FROM Sa_Form Where FormID=" + id + " ";
+            DataTable dt = saHelper.DataTableFn(dbConn.SAConnStrReader(), Qry);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+
+                FormBEL company = new FormBEL
+                {
+                    FormID = dt.Rows[0]["FormID"].ToString(),
+                    FormName = dt.Rows[0]["FormName"].ToString(),
+                    FormURL = dt.Rows[0]["FormURL"].ToString(),
+                    IsActive = Convert.ToBoolean(dt.Rows[0]["IsActive"].ToString()),
+                    //COMPANY_ADDRESS2 = companyData.Rows[0]["COMPANY_ADDRESS2"].ToString()
+                };
+                return company;
+
+            }
+            return null;
+        }
+
+
     }
 }

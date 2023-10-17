@@ -1,8 +1,8 @@
 ﻿
+using BuildAdminPanelAspNetCore.Universal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
-using Systems.Universal;
 
 namespace BuildAdminPanelAspNetCore.Controlles
 {

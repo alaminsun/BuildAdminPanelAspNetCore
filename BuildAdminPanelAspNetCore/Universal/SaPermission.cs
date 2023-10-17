@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 
-namespace Systems.Universal
+namespace BuildAdminPanelAspNetCore.Universal
 {
     public class SaPermission
     {

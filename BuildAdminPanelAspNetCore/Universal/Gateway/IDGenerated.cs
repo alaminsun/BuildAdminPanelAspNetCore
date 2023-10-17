@@ -6,7 +6,7 @@ using System.Data.OracleClient;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using Systems.Universal;
+using BuildAdminPanelAspNetCore.Universal;
 
 namespace RMS_Square.Universal.Gateway
 {

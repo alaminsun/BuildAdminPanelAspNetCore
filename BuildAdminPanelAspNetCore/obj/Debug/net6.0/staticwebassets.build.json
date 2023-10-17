@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wegDC18s4KMvatAqBhi8e2BB2r4AGk1JuaikQzgR3Eo=",
+  "Hash": "sjUUWoSXI9oCx3fOAk8azu4Uwnm7tNEQQx2N6I7gj4U=",
   "Source": "BuildAdminPanelAspNetCore",
   "BasePath": "_content/BuildAdminPanelAspNetCore",
   "Mode": "Default",
@@ -34935,6 +34935,23 @@
       "OriginalItemSpec": "wwwroot\\admin\\plugins\\uplot\\uPlot.min.css"
     },
     {
+      "Identity": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\wwwroot\\css\\bootswatchMateria.css",
+      "SourceId": "BuildAdminPanelAspNetCore",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\wwwroot\\",
+      "BasePath": "_content/BuildAdminPanelAspNetCore",
+      "RelativePath": "css/bootswatchMateria.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\bootswatchMateria.css"
+    },
+    {
       "Identity": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\wwwroot\\css\\CustomCSS\\animate.css",
       "SourceId": "BuildAdminPanelAspNetCore",
       "SourceType": "Discovered",
@@ -39304,12 +39321,12 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\wwwroot\\js\\company.js",
+      "Identity": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\wwwroot\\images\\boy.png",
       "SourceId": "BuildAdminPanelAspNetCore",
       "SourceType": "Discovered",
       "ContentRoot": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\wwwroot\\",
       "BasePath": "_content/BuildAdminPanelAspNetCore",
-      "RelativePath": "js/company.js",
+      "RelativePath": "images/boy.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -39318,7 +39335,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\company.js"
+      "OriginalItemSpec": "wwwroot\\images\\boy.png"
     },
     {
       "Identity": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\wwwroot\\js\\CustomJS\\AccessPermission.js",
@@ -39438,6 +39455,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\CustomJS\\ResetText.js"
+    },
+    {
+      "Identity": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\wwwroot\\js\\form.js",
+      "SourceId": "BuildAdminPanelAspNetCore",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\wwwroot\\",
+      "BasePath": "_content/BuildAdminPanelAspNetCore",
+      "RelativePath": "js/form.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\form.js"
     },
     {
       "Identity": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\wwwroot\\js\\menu_config.js",

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using BuildAdminPanelAspNetCore.Universal;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Web;
-using Systems.Universal;
 
 namespace RMS_Square.DAL.Common
 {

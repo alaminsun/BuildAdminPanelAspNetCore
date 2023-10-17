@@ -1,10 +1,8 @@
-﻿
-
-using BuildAdminPanelAspNetCore.ActionFilter;
-using BuildAdminPanelAspNetCore.Models.BEL;
+﻿using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
 using BuildAdminPanelAspNetCore.Models.DAL.DAO;
+using BuildAdminPanelAspNetCore.Universal;
 using Microsoft.AspNetCore.Mvc;
-using Systems.Universal;
+
 
 namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {
@@ -30,41 +28,86 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
             //return View();
         }
 
-        //[HttpGet]
-        //public ActionResult GetForm()
-        //{
-        //    var data = primaryDAO.GetFormList();
-        //    return new JsonResult(data);
-        //}
+        [HttpGet]
+        [Route("GetForm")]
+        public ActionResult GetForm()
+        {
+            var formlist = primaryDAO.GetFormList();
+            return Json(new { data = formlist });
+            //return new JsonResult(data);
+        }
+        [HttpGet]
+        [Route("Upsert")]
+        public IActionResult Upsert(int? id)
+        {
+            FormBEL form = new();
 
-
+            if (id == null || id == 0)
+            {
+                return View(form);
+            }
+            else
+            {
+                form = primaryDAO.GetForm(id);
+                return View(form);
+            }
+        }
 
         [HttpPost]
-        public ActionResult OperationsMode(FormBEL master)
+        [Route("Upsert")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(FormBEL obj)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (primaryDAO.SaveUpdate(master))
+
+                if (obj.FormID == "")
                 {
-                    return Json(new { ID = primaryDAO.MaxID, Mode = primaryDAO.IUMode, Status = "Yes" });
+                    //_unitOfWork.Company.Add(obj);
+                    primaryDAO.SaveUpdate(obj);
+
+                    TempData["success"] = "Form created successfully";
                 }
                 else
-                    return View("frmRole");
-            }
-            catch (Exception e)
-            {
-                if (e.Message.Substring(0, 9) == "ORA-00001")
-                    return Json(new { Status = "Error:ORA-00001,Data already exists!" });//Unique Identifier.
-                else if (e.Message.Substring(0, 9) == "ORA-02292")
-                    return Json(new { Status = "Error:ORA-02292,Data already exists!" });//Child Record Found.
-                else if (e.Message.Substring(0, 9) == "ORA-12899")
-                    return Json(new { Status = "Error:ORA-12899,Data Value Too Large!" });//Value Too Large.
-                else
-                    return Json(new { Status = "! Error : Error Code:" + e.Message.Substring(0, 9) });//Other Wise Error Found
+                {
+                    //_unitOfWork.Company.Update(obj);
+                    primaryDAO.SaveUpdate(obj);
+                    TempData["success"] = "Form updated successfully";
+                }
+                //_unitOfWork.Save();
 
+                return RedirectToAction("Index");
             }
-
+            return View(obj);
 
         }
+
+        //[HttpPost]
+        //public ActionResult OperationsMode(FormBEL master)
+        //{
+        //    try
+        //    {
+        //        if (primaryDAO.SaveUpdate(master))
+        //        {
+        //            return Json(new { ID = primaryDAO.MaxID, Mode = primaryDAO.IUMode, Status = "Yes" });
+        //        }
+        //        else
+        //            return View("frmRole");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        if (e.Message.Substring(0, 9) == "ORA-00001")
+        //            return Json(new { Status = "Error:ORA-00001,Data already exists!" });//Unique Identifier.
+        //        else if (e.Message.Substring(0, 9) == "ORA-02292")
+        //            return Json(new { Status = "Error:ORA-02292,Data already exists!" });//Child Record Found.
+        //        else if (e.Message.Substring(0, 9) == "ORA-12899")
+        //            return Json(new { Status = "Error:ORA-12899,Data Value Too Large!" });//Value Too Large.
+        //        else
+        //            return Json(new { Status = "! Error : Error Code:" + e.Message.Substring(0, 9) });//Other Wise Error Found
+
+        //    }
+
+
+        //}
     }
 }

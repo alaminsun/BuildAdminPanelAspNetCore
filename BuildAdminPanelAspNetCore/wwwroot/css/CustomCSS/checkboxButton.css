@@ -1,11 +1,11 @@
-﻿body {
+﻿/*body {
     font-family: sans-serif;
     margin: 0 auto;
     text-align: center;
     background-color: #104068;
-}
+}*/
 /* This is to be able to center the content in the middle of the page; */
-.container {
+/*.container {
     width: 150px;
     height: 20px;
     margin: 100px auto;
@@ -13,7 +13,7 @@
 
 div label input {
     margin-right: 100px;
-}
+}*/
 
 .cat {
     margin: 4px;

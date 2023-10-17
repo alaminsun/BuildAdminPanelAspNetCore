@@ -1,0 +1,71 @@
+﻿@model BuildAdminPanelAspNetCore.Areas.SA.Models.BEL.FormBEL
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <input asp-for="FormID" hidden/>
+    <div class="card">
+            <div class="border p-3 mt-4 row">
+            <div class="card-header">
+                <div class="col-12 pb-2">
+                    <h2 class="text-primary">@(Model.FormID != "" ? "Update" : "Create") Company</h2>
+                    <hr />
+                </div>
+            </div>
+            <div class="card-body">
+                @*<div asp-validation-summary="All"></div>*@
+                <div class="form-group">
+                    <label asp-for="FormName" class="form-label mt-4">Form Name</label>
+                    <input asp-for="FormName" type="text" class="form-control-plaintext">
+                    <span asp-validation-for="FormName" class="text-danger"></span>
+                </div>
+@*                <div class="mb-3">
+                    <label asp-for="FormName"></label>
+                    <input asp-for="FormName" class="form-control" />
+                    <span asp-validation-for="FormName" class="text-danger"></span>
+                </div>*@
+                <div class="mb-3">
+                    <label asp-for="FormURL"></label>
+                    <input asp-for="FormURL" class="form-control" />
+                    <span asp-validation-for="FormURL" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6">
+@*                    <label asp-for="IsActive"></label>
+                    <input asp-for="IsActive" type="checkbox" id="IsActive" class="chk" name="IsActive" checked="checked">*@
+                    <input asp-for="IsActive" type="checkbox" class="form-check-input" id="IsActive" name="IsActive" checked>
+                    <label class="form-check-label" asp-for="IsActive">IsActive</label>
+                    @*<input asp-for="StreetAddress" class="form-control" />
+                    <span asp-validation-for="StreetAddress" class="text-danger"></span>*@
+                </div>
+            </div>
+            <div class="card-foorter">
+                <div class="col-12">
+                    @if (Model.FormID != "" || Model.FormID != null)
+                            {
+                        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
+                    }
+
+                    <a asp-controller="Company" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                        Back to List
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+  }
+
+
+

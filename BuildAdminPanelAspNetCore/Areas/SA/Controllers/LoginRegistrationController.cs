@@ -1,9 +1,8 @@
 ﻿using BuildAdminPanelAspNetCore.Models;
+using BuildAdminPanelAspNetCore.Universal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Data;
-using Systems.Universal;
 
 namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {

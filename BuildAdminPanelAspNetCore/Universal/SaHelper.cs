@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace Systems.Universal
+namespace BuildAdminPanelAspNetCore.Universal
 {
     public class SaHelper
     {
