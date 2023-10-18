@@ -6,7 +6,8 @@ builder.Services.AddControllersWithViews();
 //builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddTransient<ActionAuth>();
+builder.Services.AddTransient<ActionAuthAttribute>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/SA/LoginRegistration/Login";

@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+using BuildAdminPanelAspNetCore.Universal;
 using System.Data;
-using System.Linq;
-using System.Web;
-using RMS_Square.Areas.SA.Models.BEL;
-using RMS_Square.DAL.Gateway;
-using RMS_Square.Universal.Gateway;
-using Systems.Universal;
 
-namespace RMS_Square.Areas.SA.Models.DAL.DAO
+namespace BuildAdminPanelAspNetCore.Models.DAL.DAO
 {
     public class ModuleDAO:ReturnData
     {
-        DBConnection dbConn = new DBConnection();
-        // SaHelper saHelper = new SaHelper();
-        DBHelper saHelper = new DBHelper();
+        DataBaseConnection dbConn = new DataBaseConnection();
+        SaHelper saHelper = new SaHelper();
         public Boolean SaveUpdate(ModuleBEL moduleBEL)
         {
             try
@@ -71,6 +64,28 @@ namespace RMS_Square.Areas.SA.Models.DAL.DAO
 
                     }).ToList();
             return item;
+        }
+
+        public ModuleBEL GetModuleById(int? id)
+        {
+            //DataTable companyData = await GetCompanyByIdDataTable(db, id);
+            string Qry = "Select ModuleID,ModuleName,IsActive From Sa_Module Where ModuleID=" + id + " ";
+            DataTable dt = saHelper.DataTableFn(dbConn.SAConnStrReader(), Qry);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+
+                ModuleBEL module = new ModuleBEL
+                {
+                    ModuleID = dt.Rows[0]["ModuleID"].ToString(),
+                    ModuleName = dt.Rows[0]["ModuleName"].ToString(),
+                    IsActive = Convert.ToBoolean(dt.Rows[0]["IsActive"].ToString()),
+                    //COMPANY_ADDRESS2 = companyData.Rows[0]["COMPANY_ADDRESS2"].ToString()
+                };
+                return module;
+
+            }
+            return null;
         }
     }
 }

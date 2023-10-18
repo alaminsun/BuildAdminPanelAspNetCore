@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BuildAdminPanelAspNetCore.Models.BEL
+namespace BuildAdminPanelAspNetCore.Areas.SA.Models.BEL
 {
     public class RoleInSoftwareModuleBEL
     {

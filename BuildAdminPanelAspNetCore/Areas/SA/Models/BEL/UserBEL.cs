@@ -18,7 +18,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
 
-namespace BuildAdminPanelAspNetCore.Models.BEL
+namespace BuildAdminPanelAspNetCore.Areas.SA.Models.BEL
 {
     public class UserBEL:GlobalBEL
     {

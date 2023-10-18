@@ -51,6 +51,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU0FcVmlld3NcU29mdHdhcmVcZnJtU29mdHdhcmUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Areas/SA/Views/Software/Upsert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU0FcVmlld3NcU29mdHdhcmVcVXBzZXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Areas/SA/Views/UserBuyerMapping/frmUserBuyerMapping.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU0FcVmlld3NcVXNlckJ1eWVyTWFwcGluZ1xmcm1Vc2VyQnV5ZXJNYXBwaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -77,6 +81,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Shared/_LogoutModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dvdXRNb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Shared/_Notification.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Ob3RpZmljYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Shared/_ValidationScriptsPartial.cshtml]

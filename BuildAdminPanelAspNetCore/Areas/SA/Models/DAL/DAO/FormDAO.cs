@@ -83,7 +83,7 @@ namespace BuildAdminPanelAspNetCore.Models.DAL.DAO
         public FormBEL GetForm(int? id)
         {
             //DataTable companyData = await GetCompanyByIdDataTable(db, id);
-            string Qry = "SELECT FormID,FormName,FormURL,IsActive FROM Sa_Form Where FormID=" + id + " ";
+            string Qry = "SELECT FormID,FormName,FormURL,MENUIMAGE,IsActive FROM Sa_Form Where FormID=" + id + " ";
             DataTable dt = saHelper.DataTableFn(dbConn.SAConnStrReader(), Qry);
 
             if (dt != null && dt.Rows.Count > 0)
@@ -94,6 +94,7 @@ namespace BuildAdminPanelAspNetCore.Models.DAL.DAO
                     FormID = dt.Rows[0]["FormID"].ToString(),
                     FormName = dt.Rows[0]["FormName"].ToString(),
                     FormURL = dt.Rows[0]["FormURL"].ToString(),
+                    MenuImage = dt.Rows[0]["MENUIMAGE"].ToString(),
                     IsActive = Convert.ToBoolean(dt.Rows[0]["IsActive"].ToString()),
                     //COMPANY_ADDRESS2 = companyData.Rows[0]["COMPANY_ADDRESS2"].ToString()
                 };

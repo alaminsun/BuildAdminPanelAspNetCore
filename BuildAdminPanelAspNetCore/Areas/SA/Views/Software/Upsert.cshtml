@@ -1,0 +1,62 @@
+﻿@model BuildAdminPanelAspNetCore.Areas.SA.Models.BEL.SoftwareBEL
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <input asp-for="SoftwareID" hidden />
+    <div class="border p-3 mt-4 row">
+        @*    <div class="card">*@
+        <div class="card-header">
+            <h4 class="text-primary">@(Model.SoftwareID != null ? "Update" : "Create") Menu</h4>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label asp-for="SoftwareName" class="form-label mt-4">Menu Name</label>
+                <input asp-for="SoftwareName" type="text" class="form-control-plaintext">
+                <span asp-validation-for="SoftwareName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoftwareShortName" class="form-label mt-4">Short Name</label>
+                <input asp-for="SoftwareShortName" type="text" class="form-control-plaintext" />
+                <span asp-validation-for="SoftwareShortName" class="text-danger"></span>
+            </div>
+@*            <div class="form-group">
+                <label asp-for="MenuImage"></label>
+                <input asp-for="MenuImage" type="text" class="form-control-plaintext" />
+                <span asp-validation-for="MenuImage" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input asp-for="IsActive" type="checkbox" class="form-check-input" id="IsActive" name="IsActive" checked>
+                <label class="form-check-label" asp-for="IsActive">IsActive</label>
+            </div>
+        </div>
+        <div class="card-foorter">
+            <div class="col-12">
+            @if (Model.SoftwareID != null)
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
+                }
+                <a asp-area="SA" asp-controller="Software" asp-action="frmSoftware" class="btn btn-secondary" style="width:150px">
+                    Back to List
+                </a>
+            </div>
+
+        </div>
+    </div>
+    @*   </div>*@
+
+</form>
+
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+  }
+
+
+

@@ -1,22 +1,27 @@
-﻿using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+﻿using BuildAdminPanelAspNetCore.ActionFilter;
+using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
 using BuildAdminPanelAspNetCore.Models.DAL.DAO;
 using BuildAdminPanelAspNetCore.Universal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 
 
 namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {
     [Area("SA")]
     [Route("SA/Form")]
+    
     public class FormController : Controller
     {
         DataBaseConnection dbConn = new DataBaseConnection();
         FormDAO primaryDAO = new FormDAO();
         // GET: /SA/Form/
-        //[ActionAuth]
+
         //[Route("frmForm")]
+        
         [Route("frmForm")]
         //[Route("~/")]
+        //[ActionAuth]
         public IActionResult frmForm()
         {
             if (HttpContext.Session.GetString("UserID") != null)
@@ -58,10 +63,11 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(FormBEL obj)
         {
+            ModelState.Remove("FormID");
             if (ModelState.IsValid)
             {
 
-                if (obj.FormID == "")
+                if (obj.FormID == "" || obj.FormID == null)
                 {
                     //_unitOfWork.Company.Add(obj);
                     primaryDAO.SaveUpdate(obj);
@@ -76,7 +82,7 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
                 }
                 //_unitOfWork.Save();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("frmForm");
             }
             return View(obj);
 
@@ -109,5 +115,19 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 
 
         //}
+        
+        //[HttpDelete]
+        [Route("delete")]
+        public IActionResult Delete(int? id)
+        {
+            var obj = primaryDAO.GetForm(id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            primaryDAO.DeleteExecute(obj);
+            return Json(new { success = true, message = "Delete Successful" });
+
+        }
     }
 }

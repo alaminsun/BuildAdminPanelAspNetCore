@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using RMS_Square.Areas.SA.Models.BEL;
-using RMS_Square.Areas.SA.Models.DAL.DAO;
-using RMS_Square.DAL.DAO;
-using Systems.ActionFilter;
+﻿using BuildAdminPanelAspNetCore.ActionFilter;
+using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+using BuildAdminPanelAspNetCore.Models.DAL.DAO;
+using Microsoft.AspNetCore.Mvc;
 
-namespace RMS_Square.Areas.SA.Controllers
+namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {
     public class ModuleController : Controller
     {
@@ -17,7 +12,7 @@ namespace RMS_Square.Areas.SA.Controllers
         [ActionAuth]
         public ActionResult frmModule()
         {
-            if (Session["UserID"] != null)
+            if (HttpContext.Session.GetString("UserID") != null)
             {
                 return View();
             }
@@ -25,41 +20,60 @@ namespace RMS_Square.Areas.SA.Controllers
         }
 
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetModule()
         {
-            var data = primaryDAO.GetModuleList();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var moduleList = primaryDAO.GetModuleList();
+            return Json(new { data = moduleList });
         }
 
+        [HttpGet]
+        [Route("Upsert")]
+        public IActionResult Upsert(int? id)
+        {
+            ModuleBEL module = new();
 
+            if (id == null || id == 0)
+            {
+                return View(module);
+            }
+            else
+            {
+                module = primaryDAO.GetModuleById(id);
+                return View(module);
+            }
+        }
 
         [HttpPost]
-        public ActionResult OperationsMode(ModuleBEL master)
+        [Route("Upsert")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(ModuleBEL obj)
         {
-            try
+            ModelState.Remove("SoftwareID");
+            if (ModelState.IsValid)
             {
-                if (primaryDAO.SaveUpdate(master))
+
+                if (obj.ModuleID == "" || obj.ModuleID == null)
                 {
-                    return Json(new { ID = primaryDAO.MaxID, Mode = primaryDAO.IUMode, Status = "Yes" });
+                    //_unitOfWork.Company.Add(obj);
+                    primaryDAO.SaveUpdate(obj);
+
+                    TempData["success"] = "Module created successfully";
                 }
                 else
-                    return View("frmRole");
+                {
+                    //_unitOfWork.Company.Update(obj);
+                    primaryDAO.SaveUpdate(obj);
+                    TempData["success"] = "Module updated successfully";
+                }
+                //_unitOfWork.Save();
+
+                return RedirectToAction("frmSoftware");
             }
-            catch (Exception e)
-            {
-                if (e.Message.Substring(0, 9) == "ORA-00001")
-                    return Json(new { Status = "Error:ORA-00001,Data already exists!" });//Unique Identifier.
-                else if (e.Message.Substring(0, 9) == "ORA-02292")
-                    return Json(new { Status = "Error:ORA-02292,Data already exists!" });//Child Record Found.
-                else if (e.Message.Substring(0, 9) == "ORA-12899")
-                    return Json(new { Status = "Error:ORA-12899,Data Value Too Large!" });//Value Too Large.
-                else
-                    return Json(new { Status = "! Error : Error Code:" + e.Message.Substring(0, 9) });//Other Wise Error Found
+            return View(obj);
 
-            }
+        }
 
-
-        }     
-	}
+     
+    }
 }

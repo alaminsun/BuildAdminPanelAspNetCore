@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using RMS_Square.Areas.SA.Models.BEL;
-using RMS_Square.Areas.SA.Models.DAL.DAO;
-using Systems.ActionFilter;
+﻿
 
-namespace RMS_Square.Areas.SA.Controllers
+
+using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+using BuildAdminPanelAspNetCore.Areas.SA.Models.DAL.DAO;
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {
+    [Area("SA")]
+    [Route("SA/Software")]
     public class SoftwareController : Controller
     {
         SoftwareDAO primaryDAO = new SoftwareDAO();
         //
         // GET: /SA/Software/
-        [ActionAuth]
+        //[ActionAuth]
+        [Route("frmSoftware")]
         public ActionResult frmSoftware()
         {
-            if (Session["UserID"] != null)
+            if (HttpContext.Session.GetString("UserID") != null)
             {
                 return View();
             }
@@ -25,39 +27,75 @@ namespace RMS_Square.Areas.SA.Controllers
         }
 
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
+        [Route("GetSoftware")]
         public ActionResult GetSoftware()
         {
-            var data = primaryDAO.GetSoftwareList();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var softwarelist = primaryDAO.GetSoftwareList();
+            return Json(new { data = softwarelist });
         }
 
 
+
+        [HttpGet]
+        [Route("Upsert")]
+        public IActionResult Upsert(int? id)
+        {
+            SoftwareBEL software = new();
+
+            if (id == null || id == 0)
+            {
+                return View(software);
+            }
+            else
+            {
+                software = primaryDAO.GetSoftwareById(id);
+                return View(software);
+            }
+        }
 
         [HttpPost]
-        public ActionResult OperationsMode(SoftwareBEL master)
+        [Route("Upsert")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(SoftwareBEL obj)
         {
-            try
+            ModelState.Remove("SoftwareID");
+            if (ModelState.IsValid)
             {
-                if (primaryDAO.SaveUpdate(master))
+
+                if (obj.SoftwareID == "" || obj.SoftwareID == null)
                 {
-                    return Json(new { ID = primaryDAO.MaxID, Mode = primaryDAO.IUMode, Status = "Yes" });
+                    //_unitOfWork.Company.Add(obj);
+                    primaryDAO.SaveUpdate(obj);
+
+                    TempData["success"] = "Menu created successfully";
                 }
                 else
-                    return View("frmRole");
-            }
-            catch (Exception e)
-            {
-                if (e.Message.Substring(0, 9) == "ORA-00001")
-                    return Json(new { Status = "Error:ORA-00001,Data already exists!" });//Unique Identifier.
-                else if (e.Message.Substring(0, 9) == "ORA-02292")
-                    return Json(new { Status = "Error:ORA-02292,Data already exists!" });//Child Record Found.
-                else if (e.Message.Substring(0, 9) == "ORA-12899")
-                    return Json(new { Status = "Error:ORA-12899,Data Value Too Large!" });//Value Too Large.
-                else
-                    return Json(new { Status = "! Error : Error Code:" + e.Message.Substring(0, 9) });//Other Wise Error Found
+                {
+                    //_unitOfWork.Company.Update(obj);
+                    primaryDAO.SaveUpdate(obj);
+                    TempData["success"] = "Menu updated successfully";
+                }
+                //_unitOfWork.Save();
 
+                return RedirectToAction("frmSoftware");
             }
+            return View(obj);
+
         }
-	}
+
+        [Route("delete")]
+        public IActionResult Delete(int? id)
+        {
+            var obj = primaryDAO.GetSoftwareById(id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            primaryDAO.DeleteExecute(obj);
+            return Json(new { success = true, message = "Delete Successful" });
+            //TempData["success"] = "Menu deleted successfully";
+            //return View(obj);
+        }
+    }
 }

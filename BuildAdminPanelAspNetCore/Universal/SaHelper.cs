@@ -779,7 +779,7 @@ namespace BuildAdminPanelAspNetCore.Universal
                         {
                             isSuccessful = true;
 
-                            if (string.IsNullOrEmpty(FieldName1) || FieldName2 == "0")
+                            if (string.IsNullOrEmpty(FieldName1) || FieldName1 == "0")
                             {
                                 iuMode = "I";
                                 maxID = GetValueFn(ConnString, Qry);

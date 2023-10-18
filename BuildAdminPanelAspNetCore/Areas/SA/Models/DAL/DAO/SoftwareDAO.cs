@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+using BuildAdminPanelAspNetCore.Universal;
 using System.Data;
-using System.Linq;
-using System.Web;
-using RMS_Square.Areas.SA.Models.BEL;
-using RMS_Square.DAL.Gateway;
-using RMS_Square.Universal.Gateway;
-using Systems.Universal;
 
-namespace RMS_Square.Areas.SA.Models.DAL.DAO
+namespace BuildAdminPanelAspNetCore.Areas.SA.Models.DAL.DAO
 {
     public class SoftwareDAO: ReturnData
     {
-        DBConnection dbConn = new DBConnection();
-        // SaHelper saHelper = new SaHelper();
-        DBHelper saHelper = new DBHelper();
+        DataBaseConnection dbConn = new DataBaseConnection();
+        SaHelper saHelper = new SaHelper();
         public bool SaveUpdate(SoftwareBEL master)
         {
             try
@@ -59,18 +52,41 @@ namespace RMS_Square.Areas.SA.Models.DAL.DAO
             return item;
         }
 
-        //public bool DeleteExecute(SoftwareBEL softwareBEL)
-        //{
-        //    string Qry = " Delete from Sa_Software Where SoftwareID='" + softwareBEL.ID + "'";
-        //    if (dbHelper.CmdExecute(Qry))
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
+        public bool DeleteExecute(SoftwareBEL softwareBEL)
+        {
+            string Qry = " Delete from Sa_Software Where SoftwareID='" + softwareBEL.SoftwareID + "'";
+            if (saHelper.ExecuteFn(dbConn.SAConnStrReader(), Qry))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public SoftwareBEL GetSoftwareById(int? id)
+        {
+            //DataTable companyData = await GetCompanyByIdDataTable(db, id);
+            string Qry = "SELECT SoftwareID,SoftwareName,SoftwareShortName,IsActive from Sa_Software Where SoftwareID=" + id + " ";
+            DataTable dt = saHelper.DataTableFn(dbConn.SAConnStrReader(), Qry);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+
+                SoftwareBEL software = new SoftwareBEL
+                {
+                    SoftwareID = dt.Rows[0]["SoftwareID"].ToString(),
+                    SoftwareName = dt.Rows[0]["SoftwareName"].ToString(),
+                    SoftwareShortName = dt.Rows[0]["SoftwareShortName"].ToString(),
+                    IsActive = Convert.ToBoolean(dt.Rows[0]["IsActive"].ToString()),
+                    //COMPANY_ADDRESS2 = companyData.Rows[0]["COMPANY_ADDRESS2"].ToString()
+                };
+                return software;
+
+            }
+            return null;
+        }
 
     }
 }
