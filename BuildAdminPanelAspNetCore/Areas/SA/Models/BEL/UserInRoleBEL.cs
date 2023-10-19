@@ -8,7 +8,8 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Models.BEL
     public class UserInRoleBEL 
     {
         public string UserID { get; set; }
-        public string Password { get; set; } 
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
         public string RoleID { get; set; }
         public string RoleName { get; set; }
    

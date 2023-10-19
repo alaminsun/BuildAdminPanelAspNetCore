@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using RMS_Square.Areas.SA.Models.BEL;
-using RMS_Square.DAL.Gateway;
-using RMS_Square.Universal.Gateway;
-using Systems.Universal;
-using System.Data.OracleClient;
+﻿
 
-namespace RMS_Square.Areas.SA.Models.DAL.DAO
+using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+using BuildAdminPanelAspNetCore.Universal;
+using System.Data;
+
+namespace RBuildAdminPanelAspNetCore.Models.DAL.DAO
 {
     public class RoleDAO :ReturnData
     {
-        DBConnection dbConn = new DBConnection();
-        // SaHelper saHelper = new SaHelper();
-        DBHelper saHelper = new DBHelper();
-
+        DataBaseConnection dbConn = new DataBaseConnection();
+        SaHelper saHelper = new SaHelper();
+        //private readonly IHttpContextAccessor _httpContextAccessor;
+        //public RoleDAO(IHttpContextAccessor httpContextAccessor)
+        //{
+        //    _httpContextAccessor = httpContextAccessor;
+        //}
+        IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
         public Boolean SaveUpdate(RoleBEL roleBEL)
         {
             try
@@ -59,7 +58,7 @@ namespace RMS_Square.Areas.SA.Models.DAL.DAO
         
         public List<RoleBEL> GetRoleList()
         {
-            string Qry = "Select RoleID,RoleName,IsActive From Sa_Role Where RoleID >='" + HttpContext.Current.Session["RoleID"].ToString() + "'";
+            string Qry = "Select RoleID,RoleName,IsActive From Sa_Role Where RoleID >='" + _httpContextAccessor.HttpContext.Session.GetString("RoleID") + "'";
             DataTable dt = saHelper.DataTableFn(dbConn.SAConnStrReader(), Qry);
             List<RoleBEL> item;
 
@@ -74,9 +73,30 @@ namespace RMS_Square.Areas.SA.Models.DAL.DAO
             return item;
         }
 
+        public RoleBEL GetRoleById(int? id)
+        {
+            string Qry = "Select RoleID,RoleName,IsActive From Sa_Role Where RoleID >='" + _httpContextAccessor.HttpContext.Session.GetString("RoleID") + "' and RoleID = "+id+"";
+            DataTable dt = saHelper.DataTableFn(dbConn.SAConnStrReader(), Qry);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                RoleBEL role = new RoleBEL
+                {
+                    RoleID = dt.Rows[0]["RoleID"].ToString(),
+                    RoleName = dt.Rows[0]["RoleName"].ToString(),
+                    IsActive = Convert.ToBoolean(dt.Rows[0]["IsActive"].ToString()),
+
+                };
+
+                return role;
+            }
+
+            return null;
+        }
+
         public List<RoleBEL> GetRoleInSoftwareModuleMappingList()
         {
-            string Qry = "Select distinct a.RoleID,b.RoleName from Sa_RoleInSM a,Sa_Role b Where a.RoleID=b.RoleID and upper(a.IsActive)=upper('true') and a.RoleID >='" + HttpContext.Current.Session["RoleID"].ToString() + "' Order by a.RoleID";
+            string Qry = "Select distinct a.RoleID,b.RoleName from Sa_RoleInSM a,Sa_Role b Where a.RoleID=b.RoleID and upper(a.IsActive)=upper('true') and a.RoleID >='" + _httpContextAccessor.HttpContext.Session.GetString("RoleID") + "' Order by a.RoleID";
             DataTable dt = saHelper.DataTableFn(dbConn.SAConnStrReader(), Qry);
             List<RoleBEL> item;
 

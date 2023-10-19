@@ -1,190 +1,125 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<script src="~/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<link href="~/Content/CSS/InputText.css" rel="stylesheet" />
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        EventPermission();
-
-        $('#btnReset').click(function () {
-
-            $(":checkbox").prop('checked', false);
-            //  $('.chk').prop('checked', false);
-            ResetData();
-
-
-
-        });
-
-        $('#btnView').click(function () {
-
-            PopupWindow.open();
-           
-            $.ajax({
-                url: '/Module/GetModule',
-                method: 'get',
-                data: 'json',
-                success: function (data) {
-                    if (data != "") {
-                        $('#PopupWindowGrid').data('kendoGrid').dataSource.data(data);
-                    }
-                    else {
-                        PopupWindow.close();
-                        AcknowledgeMsg();
-                    }
-
-                },
-                error: function () {
-                    alert('Error occured!');
-                },
-                //complete: function () { },
-            });
-
-        });
-      
-        //Initializing Main page details Kendo Grid Colums
-        var PopupGrid = $('#PopupWindowGrid').kendoGrid({
-            dataSource: new kendo.data.DataSource({
-                batch: true,
-                schema: {
-                    model: {
-                        id: "ModuleID",
-                        fields: {
-                            ModuleID: { type: "string" },
-                            ModuleName: { type: "string" }
-                        }
-                    }
-                },
-                pageSize: 10,
-            }),
-            pageable: {
-                //refresh: true,
-                pageSizes: true, buttonCount: 5
-            },
-            scrollable: true,
-            sortable: true,
-            filterable: true,
-            editable: false,
-            selectable: "row",
-            //selectable: "multiple",
-            toolbar: [{ template: "<input type='text' id='txtPopupInput'  style='float:right' placeholder='Search...' class='k-textbox'>" }, ],
-            navigatable: true,
-            height: 430,
-            // groupable: true,
-            groupable: { messages: { empty: "Custom message text" } },
-            columnMenu: true,
-            reorderable: true,
-            resizable: true,
-            columns: [
-                 { field: "ModuleID", title:"SubHead ID",hidden:true},
-                 { field: "ModuleName", title: "SubHead Name" },
-                 { field: "IsActive", title: "IsActive"}
-
-            ]
-
-        }).data('kendoGrid');
-
-        $('#PopupWindowGrid').dblclick(function () {
-            var grid = $(this).data('kendoGrid');
-            var selectRow = grid.dataItem(grid.select());
-            PopupWindow.close();
-            SetMasterData(selectRow);
-
-            $('#IsActive').prop('checked', selectRow.IsActive);
-        });
-
-        //Produc Name twise Filter table row
-        $("#txtPopupInput").keyup(function () {
-            var val = $(this).val();
-            $("#PopupWindowGrid").data("kendoGrid").dataSource.filter({
-                logic: "or",
-                filters: [
-                     { field: "ModuleID", operator: "contains", value: val },
-                     { field: "ModuleName", operator: "contains", value: val },            
-                   //  { field: "IsActive", operator: "contains", value: val },
-
-                ]
-            });
-        });
-
-
-
-
-        var chkValue = true;
-        $('#IsActive').click(function () {
-            if ($(this).is(':checked')) { chkValue = $('#IsActive').prop('checked'); }
-            else { chkValue = $('#IsActive').prop('checked'); }
-        });
-        $('#btnSave').click(function () {
-            var Input = InputValidation('ModuleName');
-
-            if (Input == 0) {
-                master.ModuleID = $('#ModuleID').val();
-                master.ModuleName = $('#ModuleName').val();
-                master.IsActive = chkValue;
-
-
-
-                $.ajax({
-                    url: '/Module/OperationsMode',
-                    data: JSON.stringify(master),
-                    type: 'POST',
-                    contentType: 'application/json;',
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.Status == "Yes") {
-                            $("#ModuleID").val(data.ID);
-                            OperationMsg(data.Mode);
-                        }
-                        else {
-                            ErrorFrmServerMsg(data.Status);
-                        }
-
-                    },
-                    error: function () { ErrorFrmClientMsg(); },
-                    // complete: function () { CompletedMsg(); },
-                }); //End of ajax call
-            }
-            else {
-                ValidationMsg();
-            }
-
-        });
-        var master = { "ModuleID": "", "ModuleName": "", "IsActive": "" };
-    });
-</script>
-
-
-
-
-        <div class="box-header with-border"> @*Form Title*@          
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <div id="MessageText"></div></div>
-            <div class="col-xs-0 col-sm-0 col-md-8 col-lg-8">
-                <div style="text-align:right;">
-                    <button id="btnSave" class="btn btn-primary btn-lg" type="button"><i class="glyphicon glyphicon-save"></i>Save</button>
-                    <button id="btnView" class="btn btn-primary btn-lg" type="button"><i class="glyphicon glyphicon-search"></i>Search</button>
-                    <button id="btnReset" class="btn btn-primary btn-lg" type="button"><i class="glyphicon glyphicon-refresh"></i>Reset</button>
-                    @*<button id="btnDelete" class="btn btn-primary btn-lg" type="button"><i class="glyphicon glyphicon-trash"></i>Delete</button>*@
+<link href="~/css/customcss/checkboxbutton.css" rel="stylesheet" />
+<div class="container p-3">
+    <div class="card">
+        <div class="card-header">
+            <div class="row pt-4">
+                <div class="col-6">
+                    <h2 class="text-primary">SubMenu List</h2>
+                </div>
+                <div class="col-6 text-end">
+                    <a asp-area="SA" asp-controller="Module" asp-action="Upsert" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> &nbsp; Create New Submenu
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="box-body">@*Form Body Content*@
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">SubHead Name:</div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><input type="text" id="ModuleName" name="ModuleName" placeholder="SubHead Name" class="RequiredField form-control" /></div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><input type="hidden" id="ModuleID" name="ModuleID" readonly="readonly" class="form-control" /></div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><input type="checkbox" id="IsActive" class="chk" name="IsActive" checked="checked"> IsActive</div>
-               
-            </div>
+        <br />
+        <div class="card-body">
+            <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        @*  <th>FormID</th>*@
+                        <th>SubMenuID</th>
+                        <th>SubMenu Name</th>
+                        <th>IsActive</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
-     <div class="box-footer">@*Form Footer*@</div>
-<div class="row">
-    <div id="PopupWindow" class="PopupWindowLayout" style="display: none;">
-        <div id="PopupWindowGrid" class="PopUpGrid"></div>
     </div>
 </div>
+
+@section Scripts{
+    @*<script src="~/js/form.js">*@
+    <script>
+        var dataTable;
+
+        $(document).ready(function () {
+            loadDataTable();
+        });
+
+        debugger;
+        function loadDataTable() {
+            //dataTable = new DataTable('#tblData');
+            dataTable = $('#tblData').DataTable({
+                "ajax": {
+                    "url": "/SA/Module/GetModule"
+                },
+                "columns": [
+                    /*           { "data": "formID", "width": "15%" },*/
+                    { "data": "moduleID", "width": "15%" },
+                    { "data": "moduleName", "width": "15%" },
+                    //{ "data": "softwareShortName", "width": "15%" },
+                    {
+                        data: 'isActive',
+                        render: function (data, type, row) {
+                            if (row.isActive === true) {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '" checked>';
+                                return '<div class="cat action"><label><input type="checkbox" class="checkbox" value="' + data + '" checked><span>Select</span></label> </div>'
+                            } else {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '">';
+                                return '<div class="cat action"><label><input type="checkbox" class="checkbox" value="' + data + '"><span>Select</span></label> </div>'
+                            }
+                        },
+                        "width": "15%"
+                    },
+                    //{ "data": "phoneNumber", "width": "15%" },
+                    {
+                        "data": "moduleID",
+                        "render": function (data) {
+                            return `
+                                         <div class="w-75 btn-group" role="group">
+                                                    <a href="/SA/Module/Upsert?id=${data}"
+                                           class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                                             <a onClick=Delete('${data}')
+                                           class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i>Delete</a>
+                                        </div>
+                                            `
+                        },
+                        "width": "5%"
+                    }
+                ]
+            });
+        }
+        debugger;
+        function Delete(data) {
+            console.log(data);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        //url: url,
+                        //type: 'DELETE',
+                        url: "/sa/Module/delete/",
+                        data: { "id": data },
+                        type: "DELETE",
+                        success: function (data) {
+                            if (data.success) {
+                                dataTable.ajax.reload();
+                                toastr.success(data.message);
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    })
+                }
+            })
+        }
+
+    </script>
+}
+
 
 

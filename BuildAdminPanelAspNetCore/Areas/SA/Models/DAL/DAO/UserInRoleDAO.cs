@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+using BuildAdminPanelAspNetCore.Universal;
 using System.Data;
-using System.Linq;
-using System.Web;
-using RMS_Square.Areas.SA.Models.BEL;
-using RMS_Square.DAL.Gateway;
-using Systems.Universal;
 using System.Text;
 
-namespace RMS_Square.Areas.SA.Models.DAL.DAO
+namespace BuildAdminPanelAspNetCore.Models.DAL.DAO
 {
     public class UserInRoleDAO : ReturnData
     {
-        DBConnection  dbConn=new DBConnection();
-        //Encryption encryption = new Encryption();
-        // SaHelper saHelper = new SaHelper();
-        DBHelper saHelper = new DBHelper();
+        DataBaseConnection dbConn = new DataBaseConnection();
+        SaHelper saHelper = new SaHelper();
+        IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
         public bool SaveUpdate(UserInRoleBEL master)
         {
             try
@@ -48,7 +43,7 @@ namespace RMS_Square.Areas.SA.Models.DAL.DAO
             query.Append(" LEFT JOIN  Sa_UserInRole ur ON U.USERID=ur.USERID");
             query.Append(" LEFT JOIN Sa_Role r ON r.RoleID=ur.RoleID ");
             query.Append(" LEFT JOIN EMPLOYEE_INFO EI ON EI.ID=UR.EMPID ");
-            query.Append(" WHERE ur.RoleID >='"+ HttpContext.Current.Session["RoleID"].ToString() + "'");
+            query.Append(" WHERE ur.RoleID >='"+ _httpContextAccessor.HttpContext.Session.GetString("RoleID") + "'");
 
 
             DataTable dt = saHelper.DataTableFn(dbConn.SAConnStrReader(), query.ToString());

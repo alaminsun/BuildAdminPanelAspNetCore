@@ -5,11 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {
+    [Area("SA")]
+    [Route("SA/Module")]
     public class ModuleController : Controller
     {
        ModuleDAO primaryDAO = new ModuleDAO();
         // GET: /SA/Module/
-        [ActionAuth]
+        //[ActionAuth]
+        [Route("frmModule")]
         public ActionResult frmModule()
         {
             if (HttpContext.Session.GetString("UserID") != null)
@@ -21,6 +24,7 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 
 
         [HttpGet]
+        [Route("GetModule")]
         public ActionResult GetModule()
         {
             var moduleList = primaryDAO.GetModuleList();
@@ -49,7 +53,7 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ModuleBEL obj)
         {
-            ModelState.Remove("SoftwareID");
+            ModelState.Remove("ModuleID");
             if (ModelState.IsValid)
             {
 
@@ -58,22 +62,37 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
                     //_unitOfWork.Company.Add(obj);
                     primaryDAO.SaveUpdate(obj);
 
-                    TempData["success"] = "Module created successfully";
+                    TempData["success"] = "submenu created successfully";
                 }
                 else
                 {
                     //_unitOfWork.Company.Update(obj);
                     primaryDAO.SaveUpdate(obj);
-                    TempData["success"] = "Module updated successfully";
+                    TempData["success"] = "submenu updated successfully";
                 }
                 //_unitOfWork.Save();
 
-                return RedirectToAction("frmSoftware");
+                return RedirectToAction("frmModule");
             }
             return View(obj);
 
         }
 
-     
+
+        [Route("delete")]
+        public IActionResult Delete(int? id)
+        {
+            var obj = primaryDAO.GetModuleById(id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            primaryDAO.DeleteExecute(obj);
+            return Json(new { success = true, message = "Delete Successful" });
+            //TempData["success"] = "Menu deleted successfully";
+            //return View(obj);
+        }
+
+
     }
 }

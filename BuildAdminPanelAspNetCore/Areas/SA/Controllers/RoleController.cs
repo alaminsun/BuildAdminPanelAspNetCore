@@ -1,75 +1,108 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using RMS_Square.Areas.SA.Models.BEL;
-using RMS_Square.Areas.SA.Models.DAL.DAO;
-using RMS_Square.DAL.DAO;
-using RMS_Square.DAL.Gateway;
-using Systems.ActionFilter;
+﻿
 
-namespace RMS_Square.Areas.SA.Controllers
+using BuildAdminPanelAspNetCore.ActionFilter;
+using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+using Microsoft.AspNetCore.Mvc;
+using RBuildAdminPanelAspNetCore.Models.DAL.DAO;
+
+namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {
+    [Area("SA")]
+    [Route("SA/Role")]
     public class RoleController : Controller
     {
 
         RoleDAO primaryDAO = new RoleDAO();
         //
         // GET: /SA/Role/
-        [ActionAuth]
+
+        //[ActionAuth]
+        [Route("frmRole")]
         public ActionResult frmRole()
         {
-            if (Session["UserID"] != null)
+            if (HttpContext.Session.GetString("UserID") != null)
             {
                 return View();
             }
-            return Redirect(string.Format("~/Home/frmHome"));
+            return Redirect(string.Format("~/Home/frmRole"));
         }
 
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
+        [Route("GetRole")]
         public ActionResult GetRole()
         {
-            var data = primaryDAO.GetRoleList();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var roleList = primaryDAO.GetRoleList();
+            return Json(new { data = roleList });
         }
 
         [HttpGet]
         public ActionResult GetRoleInSoftwareModuleMapping()
         {
-            var data = primaryDAO.GetRoleInSoftwareModuleMappingList();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var roleinSoft = primaryDAO.GetRoleInSoftwareModuleMappingList();
+            return Json(new { data = roleinSoft });
         }
 
+        [HttpGet]
+        [Route("Upsert")]
+        public IActionResult Upsert(int? id)
+        {
+            RoleBEL module = new();
+
+            if (id == null || id == 0)
+            {
+                return View(module);
+            }
+            else
+            {
+                module = primaryDAO.GetRoleById(id);
+                return View(module);
+            }
+        }
 
         [HttpPost]
-        public ActionResult OperationsMode(RoleBEL master)
+        [Route("Upsert")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(RoleBEL obj)
         {
-            try
+            ModelState.Remove("RoleID");
+            if (ModelState.IsValid)
             {
-                if (primaryDAO.SaveUpdate(master))
+
+                if (obj.RoleID == "" || obj.RoleID == null)
                 {
-                    return Json(new { ID = primaryDAO.MaxID, Mode = primaryDAO.IUMode, Status = "Yes" });
+                    //_unitOfWork.Company.Add(obj);
+                    primaryDAO.SaveUpdate(obj);
+
+                    TempData["success"] = "role created successfully";
                 }
                 else
-                    return View("frmRole");
-            }
-            catch (Exception e)
-            {
-                if (e.Message.Substring(0, 9) == "ORA-00001")
-                    return Json(new { Status = "Error:ORA-00001,Data already exists!" });//Unique Identifier.
-                else if (e.Message.Substring(0, 9) == "ORA-02292")
-                    return Json(new { Status = "Error:ORA-02292,Data already exists!" });//Child Record Found.
-                else if (e.Message.Substring(0, 9) == "ORA-12899")
-                    return Json(new { Status = "Error:ORA-12899,Data Value Too Large!" });//Value Too Large.
-                else
-                    return Json(new { Status = "! Error : Error Code:" + e.Message.Substring(0, 9) });//Other Wise Error Found
+                {
+                    //_unitOfWork.Company.Update(obj);
+                    primaryDAO.SaveUpdate(obj);
+                    TempData["success"] = "role updated successfully";
+                }
+                //_unitOfWork.Save();
 
+                return RedirectToAction("frmRole");
             }
-
+            return View(obj);
 
         }
 
-	}
+
+        //[Route("delete")]
+        //public IActionResult Delete(int? id)
+        //{
+        //    var obj = primaryDAO.GetModuleById(id);
+        //    if (obj == null)
+        //    {
+        //        return Json(new { success = false, message = "Error while deleting" });
+        //    }
+        //    primaryDAO.DeleteExecute(obj);
+        //    return Json(new { success = true, message = "Delete Successful" });
+        //    //TempData["success"] = "Menu deleted successfully";
+        //    //return View(obj);
+        //}
+    }
 }

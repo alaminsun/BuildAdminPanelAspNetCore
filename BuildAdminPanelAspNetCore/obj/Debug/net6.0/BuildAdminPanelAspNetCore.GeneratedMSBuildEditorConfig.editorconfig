@@ -35,6 +35,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU0FcVmlld3NcTW9kdWxlXGZybU1vZHVsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Areas/SA/Views/Module/Upsert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU0FcVmlld3NcTW9kdWxlXFVwc2VydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Areas/SA/Views/RoleInFormPermission/frmRoleInFormPermission.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU0FcVmlld3NcUm9sZUluRm9ybVBlcm1pc3Npb25cZnJtUm9sZUluRm9ybVBlcm1pc3Npb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -45,6 +49,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Areas/SA/Views/Role/frmRole.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU0FcVmlld3NcUm9sZVxmcm1Sb2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Areas/SA/Views/Role/Upsert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU0FcVmlld3NcUm9sZVxVcHNlcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Areas/SA/Views/Software/frmSoftware.cshtml]
@@ -61,6 +69,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Areas/SA/Views/UserInRole/frmUserInRole.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU0FcVmlld3NcVXNlckluUm9sZVxmcm1Vc2VySW5Sb2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Areas/SA/Views/UserInRole/Upsert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU0FcVmlld3NcVXNlckluUm9sZVxVcHNlcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/Project/BuildAdminPanelAspNetCore/BuildAdminPanelAspNetCore/Views/Home/Index.cshtml]

@@ -8,11 +8,9 @@
 
   <ItemGroup>
     <Compile Remove="Areas\SA\Controllers\LoginController.cs" />
-    <Compile Remove="Areas\SA\Controllers\RoleController.cs" />
     <Compile Remove="Areas\SA\Controllers\RoleInFormPermissionController.cs" />
     <Compile Remove="Areas\SA\Controllers\RoleInSoftwareModuleMappingController.cs" />
     <Compile Remove="Areas\SA\Controllers\UserBuyerMappingController.cs" />
-    <Compile Remove="Areas\SA\Controllers\UserInRoleController.cs" />
     <Compile Remove="Controllers\FormController.cs" />
     <Compile Remove="Controllers\ModuleController.cs" />
     <Compile Remove="Controllers\RoleController.cs" />
@@ -21,11 +19,9 @@
     <Compile Remove="Controllers\SoftwareController.cs" />
     <Compile Remove="Controllers\UserBuyerMappingController.cs" />
     <Compile Remove="Controllers\UserInRoleController.cs" />
-    <Compile Remove="Areas\SA\Models\DAL\DAO\RoleDAO.cs" />
     <Compile Remove="Areas\SA\Models\DAL\DAO\RoleInFormDAO.cs" />
     <Compile Remove="Areas\SA\Models\DAL\DAO\RoleInSoftwareModuleDAO.cs" />
     <Compile Remove="Areas\SA\Models\DAL\DAO\UserInFormDAO.cs" />
-    <Compile Remove="Areas\SA\Models\DAL\DAO\UserInRoleDAO.cs" />
     <Compile Remove="Universal\DAO\LoginRegistrationDAO.cs" />
     <Compile Remove="Universal\Gateway\DBConnection.cs" />
     <Compile Remove="Universal\Gateway\DBHelper.cs" />
