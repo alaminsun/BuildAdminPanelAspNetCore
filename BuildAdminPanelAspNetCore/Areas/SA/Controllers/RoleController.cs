@@ -33,7 +33,8 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
         public ActionResult GetRole()
         {
             var roleList = primaryDAO.GetRoleList();
-            return Json(new { data = roleList });
+            return new JsonResult(roleList);
+            //return Json(new { data = roleList });
         }
 
         [HttpGet]

@@ -31,21 +31,13 @@
             <div class="form-group">
                     <label asp-for="RoleID" class="form-label mt-4">Role</label>
                     <select class="form-select" id="RoleID">
-@*                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>*@
+                    <option>1</option>
                 </select>
             </div>
                 <div class="form-group">
                     <label asp-for="EmpID" class="form-label mt-4">Employee</label>
                     <select class="form-select" id="EmpID">
-@*                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>*@
+                        <option>1</option>
                     </select>
                 </div>
             </div>
@@ -82,23 +74,34 @@
         LoadEmployee();
         //LoadBuyer();
         $(".select2").select2();
+        // function LoadRole() {
+        //     $.ajax({
+        //         url: '/SA/Role/GetRole',
+        //         type: 'GET',
+        //         dataType: 'JSON',
+        //         data: "{}",
+        //         contentType: "application/json; charset=utf-8",
+        //         success: function (data) {
+        //             $.each(data, function (i, item) {
+        //                 console.log(item);
+        //                 $('#RoleID').append($('<option>', { value: item.roleID, html: item.roleName }, '<option/>'));
+        //             });
+        //         }
+
+        //         //,error: function () {
+        //         //    alert("Failed to load...");
+        //         //}
+        //     });
+        // }
         function LoadRole() {
+            debugger;
             $.ajax({
                 url: '/SA/Role/GetRole',
-                type: 'GET',
-                dataType: 'JSON',
-                data: "{}",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    console.log(data);
-                    $.each(data, function (i, item) {
-                        $('#RoleID').append($('<option>', { value: item.roleID, html: item.roleName }, '<option/>'));
+                success: function (result) {
+                    $.each(result, function (i, data) {
+                        $('#RoleID').append('<Option value=' + data.roleID + '>' + data.roleName + '</Option>');
                     });
                 }
-
-                //,error: function () {
-                //    alert("Failed to load...");
-                //}
             });
         }
         function LoadEmployee() {
