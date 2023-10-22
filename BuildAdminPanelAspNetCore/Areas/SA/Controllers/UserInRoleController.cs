@@ -30,9 +30,9 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 
         [HttpGet]
         [Route("GetEmployeeNotYetAssigned")]
-        public ActionResult GetEmployeeNotYetAssigned()
+        public ActionResult GetEmployeeNotYetAssigned(string roleId)
         {
-            var employeesNotYetAssigned = primaryDAO.GetEmployeeNotYetAssignedList();
+            var employeesNotYetAssigned = primaryDAO.GetEmployeeNotYetAssignedList(roleId);
             return Json(new { data = employeesNotYetAssigned});
         }
 
@@ -64,6 +64,7 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
         {
             var userInRoleList = primaryDAO.GetUserInRoleList();
             return Json(new { data = userInRoleList });
+            //return new JsonResult(userInRoleList);
         }
         [HttpGet]
         [Route("Upsert")]

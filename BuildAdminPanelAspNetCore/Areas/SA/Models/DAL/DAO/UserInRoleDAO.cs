@@ -81,9 +81,25 @@ namespace BuildAdminPanelAspNetCore.Models.DAL.DAO
                     }).ToList();
             return item;
         }
-        public List<UserInRoleBEL> GetEmployeeNotYetAssignedList()
+        public List<UserInRoleBEL> GetEmployeeNotYetAssignedList(string roleId)
         {
-            string Qry = "Select E.ID EmpID,E.EMPLOYEE_CODE,E.EMPLOYEE_NAME From EMPLOYEE_INFO E LEFT JOIN Sa_UserInRole UR ON UR.EmpID=E.ID where UR.EmpID is null  ORDER BY E.EMPLOYEE_NAME --and  Upper(STATUS)=Upper('true')";
+            string Qry = string.Empty;
+            //string Qry = "Select E.ID EmpID,E.EMPLOYEE_CODE,E.EMPLOYEE_NAME From EMPLOYEE_INFO E LEFT JOIN Sa_UserInRole UR ON UR.EmpID=E.ID where UR.EmpID is null  ORDER BY E.EMPLOYEE_NAME --and  Upper(STATUS)=Upper('true')";
+            //var ID = _httpContextAccessor.HttpContext.Session.GetString("RoleID");
+            //if (ID == "01")
+            //{
+            //    Qry = "Select ID EmpID,EMPLOYEE_CODE,EMPLOYEE_NAME From EMPLOYEE_INFO";
+            //    //Qry = "Select E.ID EmpID,E.EMPLOYEE_CODE,E.EMPLOYEE_NAME From EMPLOYEE_INFO E LEFT JOIN Sa_UserInRole UR ON UR.EmpID=E.ID Where ur.EMPID Not in(SELECT EMPID FROM Sa_UserInRole ORDER BY E.EMPLOYEE_NAME";
+            //}
+            if(string.IsNullOrEmpty(roleId))
+            {
+                // Qry = "Select E.ID EmpID,E.EMPLOYEE_CODE,E.EMPLOYEE_NAME From EMPLOYEE_INFO E LEFT JOIN Sa_UserInRole UR ON UR.EmpID=E.ID Where ur.EMPID Not in(SELECT EMPID FROM Sa_UserInRole WHERE EMPID =" + _httpContextAccessor.HttpContext.Session.GetString("EmpID") + ") ORDER BY E.EMPLOYEE_NAME";
+                Qry = "Select E.ID EmpID,Ur.RoleID, E.EMPLOYEE_CODE,E.EMPLOYEE_NAME From EMPLOYEE_INFO E LEFT JOIN Sa_UserInRole UR ON UR.EmpID=E.ID Where ur.RoleID Not in(SELECT ROLEID FROM Sa_UserInRole Where ROLEID ='" + _httpContextAccessor.HttpContext.Session.GetString("RoleID") + "' AND RoleID is null) ORDER BY E.EMPLOYEE_NAME";
+            }
+            else
+            {
+                 Qry = "Select E.ID EmpID,Ur.RoleID, E.EMPLOYEE_CODE,E.EMPLOYEE_NAME From EMPLOYEE_INFO E LEFT JOIN Sa_UserInRole UR ON UR.EmpID=E.ID Where ur.RoleID Not in(SELECT ROLEID FROM Sa_UserInRole Where ROLEID ='"+roleId+ "' AND RoleID is null) ORDER BY E.EMPLOYEE_NAME";
+            }
             DataTable dt = saHelper.DataTableFn(dbConn.SAConnStrReader(), Qry);
             List<UserInRoleBEL> item;
 
