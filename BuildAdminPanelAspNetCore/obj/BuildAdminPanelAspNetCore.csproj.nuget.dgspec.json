@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore.csproj": {}
+    "D:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore.csproj": {}
   },
   "projects": {
-    "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore.csproj": {
+    "D:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore.csproj",
+        "projectUniqueName": "D:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore.csproj",
         "projectName": "BuildAdminPanelAspNetCore",
-        "projectPath": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore.csproj",
-        "packagesPath": "C:\\Users\\al-amin\\.nuget\\packages\\",
-        "outputPath": "G:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\obj\\",
+        "projectPath": "D:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore.csproj",
+        "packagesPath": "C:\\Users\\alami\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\BuildAdminPanelAspNetCore\\BuildAdminPanelAspNetCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\al-amin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alami\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://www.nuget.org/api/v2/": {}
+          "https://packages.nuget.org/v1/FeedService.svc": {}
         },
         "frameworks": {
           "net6.0": {
@@ -76,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -30,6 +30,7 @@
             </div>
             <div class="form-row">
             <div class="form-group">
+<<<<<<< HEAD
 
                 <label for="RoleID" class="form-label mt-4">Role</label>
                     <select class="form-control select2" style="width: 100%;" id="RoleID" name="RoleID">
@@ -40,6 +41,17 @@
                     <label asp-for="EmpID" class="form-label mt-4">Employee</label>
                     <select class="form-select select2" style="width: 100%;" id="EmpID">
                        <option value="">---Select Employee---</option>
+=======
+                    <label asp-for="RoleID" class="form-label mt-4">Role</label>
+                    <select class="form-select" id="RoleID">
+                    <option>1</option>
+                </select>
+            </div>
+                <div class="form-group">
+                    <label asp-for="EmpID" class="form-label mt-4">Employee</label>
+                    <select class="form-select" id="EmpID">
+                        <option>1</option>
+>>>>>>> 716fb11ee9127f1f4af1e9cd89850d46ee8c358c
                     </select>
                 </div>
             </div>
@@ -95,6 +107,7 @@
         });
         LoadRole();
         LoadEmployee();
+<<<<<<< HEAD
         //Initialize Select2 Elements
         $('.select2').select2()
 
@@ -103,14 +116,43 @@
             theme: 'bootstrap4'
         })
 
+=======
+        //LoadBuyer();
+        $(".select2").select2();
+        // function LoadRole() {
+        //     $.ajax({
+        //         url: '/SA/Role/GetRole',
+        //         type: 'GET',
+        //         dataType: 'JSON',
+        //         data: "{}",
+        //         contentType: "application/json; charset=utf-8",
+        //         success: function (data) {
+        //             $.each(data, function (i, item) {
+        //                 console.log(item);
+        //                 $('#RoleID').append($('<option>', { value: item.roleID, html: item.roleName }, '<option/>'));
+        //             });
+        //         }
+
+        //         //,error: function () {
+        //         //    alert("Failed to load...");
+        //         //}
+        //     });
+        // }
+>>>>>>> 716fb11ee9127f1f4af1e9cd89850d46ee8c358c
         function LoadRole() {
             debugger;
             $.ajax({
                 url: '/SA/Role/GetRole',
+<<<<<<< HEAD
                 success: function (data) {
                     $.each(data.data, function (i, item) {
                         //console.log(item);
                         $('#RoleID').append('<Option value=' + item.roleID + '>' + item.roleName + '</Option>');
+=======
+                success: function (result) {
+                    $.each(result, function (i, data) {
+                        $('#RoleID').append('<Option value=' + data.roleID + '>' + data.roleName + '</Option>');
+>>>>>>> 716fb11ee9127f1f4af1e9cd89850d46ee8c358c
                     });
                 }
             });
