@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
-    @*<input asp-for="UserID" hidden />*@
+    <input asp-for="UserID" hidden/>
     <div class="border p-3 mt-4 row">
         @*    <div class="card">*@
         <div class="card-header">
@@ -29,31 +29,33 @@
                 </div>
             </div>
             <div class="form-row">
-            <div class="form-group">
-<<<<<<< HEAD
-
-                <label for="RoleID" class="form-label mt-4">Role</label>
-                    <select class="form-control select2" style="width: 100%;" id="RoleID" name="RoleID">
-                    <option value="">---Select Role---</option>
-                  </select>
-            </div>
                 <div class="form-group">
-                    <label asp-for="EmpID" class="form-label mt-4">Employee</label>
-                    <select class="form-select select2" style="width: 100%;" id="EmpID">
-                       <option value="">---Select Employee---</option>
-=======
                     <label asp-for="RoleID" class="form-label mt-4">Role</label>
-                    <select class="form-select" id="RoleID">
-                    <option>1</option>
-                </select>
-            </div>
+                    <select asp-for="RoleID" class="form-control select2" style="width: 100%;" asp-items="@Model.RoleList">
+                        <option disabled selected>---Select Role---</option>
+                    </select>
+                    <span asp-validation-for="RoleID" class="text-danger"></span>
+@*                    <label asp-for="RoleID"></label>
+                    <select asp-for="RoleID" asp-items="@Model.RoleList" class="form-select">
+                        <option disabled selected>--Select Category--</option>
+                    </select>
+                    <span asp-validation-for="RoleID" class="text-danger"></span>*@
+                </div>
                 <div class="form-group">
+@*                    <label asp-for="EmpID" class="form-label mt-4">Employee</label>
+                    <select class="form-control select2" style="width: 100%;" asp-items="@Model.EmpList" id="EmpID" class="form-select">
+                        <option disabled selected>---Select Employee---</option>
+                    </select>*@
                     <label asp-for="EmpID" class="form-label mt-4">Employee</label>
-                    <select class="form-select" id="EmpID">
-                        <option>1</option>
->>>>>>> 716fb11ee9127f1f4af1e9cd89850d46ee8c358c
+                    <select asp-for="EmpID" multiple="multiple" class="form-control select2" style="width: 100%;" asp-items="@Model.EmpList">
+                        <option disabled selected>---Select Employee---</option>
                     </select>
                 </div>
+
+            </div>
+            <div class="form-group">
+                <input asp-for="IsActive" type="checkbox" class="form-check-input" id="IsActive" name="IsActive" checked>
+                <label class="form-check-label" asp-for="IsActive">IsActive</label>
             </div>
         </div>
         <div class="card-foorter">
@@ -66,7 +68,7 @@
                 {
                     <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
                 }
-                <a asp-area="SA" asp-controller="Software" asp-action="frmSoftware" class="btn btn-secondary" style="width:150px">
+                <a asp-area="SA" asp-controller="UserInRole" asp-action="frmUserInRole" class="btn btn-secondary" style="width:150px">
                     Back to List
                 </a>
             </div>
@@ -86,6 +88,7 @@
     <script>
 
         $(document).ready(function () {
+
             // Cache the password and confirm password fields
             var passwordField = $("#Password");
             var confirmPasswordField = $("#ConfirmPassword");
@@ -105,9 +108,8 @@
                 }
             });
         });
-        LoadRole();
-        LoadEmployee();
-<<<<<<< HEAD
+        //LoadRole();
+        //LoadEmployee();
         //Initialize Select2 Elements
         $('.select2').select2()
 
@@ -115,76 +117,59 @@
         $('.select2bs4').select2({
             theme: 'bootstrap4'
         })
-
-=======
-        //LoadBuyer();
-        $(".select2").select2();
-        // function LoadRole() {
-        //     $.ajax({
-        //         url: '/SA/Role/GetRole',
-        //         type: 'GET',
-        //         dataType: 'JSON',
-        //         data: "{}",
-        //         contentType: "application/json; charset=utf-8",
-        //         success: function (data) {
-        //             $.each(data, function (i, item) {
-        //                 console.log(item);
-        //                 $('#RoleID').append($('<option>', { value: item.roleID, html: item.roleName }, '<option/>'));
-        //             });
-        //         }
-
-        //         //,error: function () {
-        //         //    alert("Failed to load...");
-        //         //}
-        //     });
-        // }
->>>>>>> 716fb11ee9127f1f4af1e9cd89850d46ee8c358c
         function LoadRole() {
             debugger;
             $.ajax({
-                url: '/SA/Role/GetRole',
-<<<<<<< HEAD
+                url: '/SA/UserInRole/GetRoles',
                 success: function (data) {
                     $.each(data.data, function (i, item) {
+                        console.log(data.data);
                         //console.log(item);
-                        $('#RoleID').append('<Option value=' + item.roleID + '>' + item.roleName + '</Option>');
-=======
-                success: function (result) {
-                    $.each(result, function (i, data) {
-                        $('#RoleID').append('<Option value=' + data.roleID + '>' + data.roleName + '</Option>');
->>>>>>> 716fb11ee9127f1f4af1e9cd89850d46ee8c358c
+                        $("#RoleID").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                        //$('#RoleID').append('<Option value=' + item.roleID + '>' + item.roleName + '</Option>');
                     });
                 }
             });
         }
 
-        function LoadEmployee() {
-            debugger;
-            $.ajax({
-                url: '/SA/UserInRole/GetEmployeeNotYetAssigned',
-                success: function (data) {
-                    $.each(data.data, function (i, item) {
-                        //console.log(item);
-                        $('#EmpID').append($('<option>', { value: item.empID, html: item.empName }, '<option/>'));
-                    });
-                }
+                function LoadEmployee() {
+                debugger;
+                $.ajax({
+                    url: '/SA/UserInRole/GetEmployeeNotYetAssigned',
+                    success: function (data) {
+                        $.each(data.data, function (i, item) {
+                            //console.log(item);
+                            //$('#EmpID').append($('<option>', { value: item.empID, html: item.empName }, '<option/>'));
+                        $("#EmpID").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                        });
+                    }
+                });
+            }
+                $('#RoleID').change(function () {
+                //$('#State').attr('disabled', false);
+                var id = $(this).val();
+                $('#EmpID').empty();
+                $('#EmpID').append('<Option>---Select Employee---</Option>');
+                $.ajax({
+                    //url: '/Cascade/State?id=' + id,
+                    url: '/SA/UserInRole/GetEmployeeNotYetAssigned?roleId=' + id,
+                    success: function (data) {
+                        $.each(data.data, function (i, item) {
+                        $("#EmpID").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                            //$('#EmpID').append('<Option value=' + item.empID + '>' + item.empName + '</Option>');
+                        });
+                    }
+                });
             });
-        }
-        $('#RoleID').change(function () {
-            //$('#State').attr('disabled', false);
-            var id = $(this).val();
-            $('#EmpID').empty();
-            //$('#EmpID').append('<Option>--Select Employee--</Option>');
-            $.ajax({
-                //url: '/Cascade/State?id=' + id,
-                url: '/SA/UserInRole/GetEmployeeNotYetAssigned?roleId=' + id,
-                success: function (data) {
-                    $.each(data.data, function (i, item) {
-                        $('#EmpID').append('<Option value=' + item.empID + '>' + item.empName + '</Option>');
-                    });
-                }
-            });
-        });
     </script>
   }
 

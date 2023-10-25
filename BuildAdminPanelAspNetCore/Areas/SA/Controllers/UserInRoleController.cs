@@ -1,6 +1,9 @@
 ﻿using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+using BuildAdminPanelAspNetCore.Areas.SA.Models.ViewModels;
 using BuildAdminPanelAspNetCore.Models.DAL.DAO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using RBuildAdminPanelAspNetCore.Models.DAL.DAO;
 
 namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {
@@ -9,6 +12,8 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
     public class UserInRoleController : Controller
     {
         UserInRoleDAO primaryDAO = new UserInRoleDAO();
+        RoleDAO roleDAO = new RoleDAO();
+        UserInRoleViewModel userInRoleVM = new UserInRoleViewModel();
         //[ActionAuth]
         [Route("frmUserInRole")]
         public ActionResult frmUserInRole()
@@ -32,24 +37,32 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
         [Route("GetEmployeeNotYetAssigned")]
         public ActionResult GetEmployeeNotYetAssigned(string roleId)
         {
-            var employeesNotYetAssigned = primaryDAO.GetEmployeeNotYetAssignedList(roleId);
-            return Json(new { data = employeesNotYetAssigned});
+            //var employeesNotYetAssigned = primaryDAO.GetEmployeeNotYetAssignedList(roleId);
+            //return Json(new { data = employeesNotYetAssigned});
+            var roletoassign = primaryDAO.GetEmployeeNotYetAssignedList(roleId).Select(c => new SelectListItem
+            {
+                Value = c.EmpID.ToString(),
+                Text = c.EmpName
+            }).ToList();
+
+            //return Json(roleList);
+            return Json(new { data = roletoassign });
         }
 
-        [HttpPost]
-        [Route("GetBuyerYetAssigned")]
-        public ActionResult GetBuyerYetAssigned(string EmpID)
-        {
-            var buyerYetAssignedList = primaryDAO.GetBuyerYetAssignedList(EmpID);
-            return Json(new { data = buyerYetAssignedList });
-        }
-        [HttpGet]
-        [Route("GetBuyer")]
-        public ActionResult GetBuyer()
-        {
-            var buyerList = primaryDAO.GetBuyerList();
-            return Json(new { data = buyerList });
-        }
+        //[HttpPost]
+        //[Route("GetBuyerYetAssigned")]
+        //public ActionResult GetBuyerYetAssigned(string EmpID)
+        //{
+        //    var buyerYetAssignedList = primaryDAO.GetBuyerYetAssignedList(EmpID);
+        //    return Json(new { data = buyerYetAssignedList });
+        //}
+        //[HttpGet]
+        //[Route("GetBuyer")]
+        //public ActionResult GetBuyer()
+        //{
+        //    var buyerList = primaryDAO.GetBuyerList();
+        //    return Json(new { data = buyerList });
+        //}
 
         [HttpGet]
         [Route("GetUser")]
@@ -58,6 +71,22 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
             var userList = primaryDAO.GetUserList();
             return Json(new { data = userList });
         }
+        [HttpGet]
+        [Route("GetRoles")]
+        public IActionResult GetRoles()
+        {
+            //var countries = // Retrieve countries from your data source
+            var roleList = roleDAO.GetRoleList().Select(c => new SelectListItem
+            {
+                Value = c.RoleID.ToString(),
+                Text = c.RoleName
+            }).ToList();
+
+            //return Json(roleList);
+            return Json(new { data = roleList });
+        }
+
+
         [HttpGet]
         [Route("GetUserInRole")]
         public ActionResult GetUserInRole()
@@ -68,19 +97,34 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
         }
         [HttpGet]
         [Route("Upsert")]
-        public IActionResult Upsert(int? id)
+        public IActionResult Upsert(string id)
         {
+            //UserInRoleBEL userInRole = new();
+            //var roleId = userInRole.userInRoleBEL.RoleID
             UserInRoleBEL userInRole = new();
+            {
+                //userInRole = new(),
+                userInRole.RoleList = roleDAO.GetRoleList().Select(c => new SelectListItem
+                {
+                    Value = c.RoleID.ToString(),
+                    Text = c.RoleName
+                }).ToList();
+                userInRole.EmpList = primaryDAO.GetEmployeeNotYetAssignedList(userInRole.RoleID).Select(c => new SelectListItem
+                {
+                    Value = c.EmpID.ToString(),
+                    Text = c.EmpName
+                }).ToList();
+    };
 
-            if (id == null || id == 0)
+            if (id == "" || id == null)
             {
                 return View(userInRole);
             }
             else
             {
-                //form = primaryDAO.GetForm(id);
+                userInRole = primaryDAO.GetUserInRoleById(id);
                 //return View(form);
-                return View();
+                return View(userInRole);
             }
         }
         [HttpPost]
@@ -88,26 +132,26 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(UserInRoleBEL obj)
         {
-            ModelState.Remove("RoleID");
+            ModelState.Remove("UserID");
             if (ModelState.IsValid)
             {
 
-                if (obj.RoleID == "" || obj.RoleID == null)
+                if (obj.UserID != "" || obj.UserID != null)
                 {
                     //_unitOfWork.Company.Add(obj);
                     primaryDAO.SaveUpdate(obj);
 
-                    TempData["success"] = "role created successfully";
+                    TempData["success"] = "user is assigned to role successfully";
                 }
-                else
-                {
-                    //_unitOfWork.Company.Update(obj);
-                    primaryDAO.SaveUpdate(obj);
-                    TempData["success"] = "role updated successfully";
-                }
+                //else
+                //{
+                //    //_unitOfWork.Company.Update(obj);
+                //    primaryDAO.SaveUpdate(obj);
+                //    TempData["success"] = "role updated successfully";
+                //}
                 //_unitOfWork.Save();
 
-                return RedirectToAction("frmRole");
+                return RedirectToAction("frmUserInRole");
             }
             return View(obj);
 
