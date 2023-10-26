@@ -4,7 +4,7 @@ using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
 using BuildAdminPanelAspNetCore.Universal;
 using System.Data;
 
-namespace RBuildAdminPanelAspNetCore.Models.DAL.DAO
+namespace BuildAdminPanelAspNetCore.Models.DAL.DAO
 {
     public class RoleDAO :ReturnData
     {

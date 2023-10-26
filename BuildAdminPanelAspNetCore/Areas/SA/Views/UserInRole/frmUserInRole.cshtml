@@ -84,16 +84,39 @@
                         "data": "userID",
                         "render": function (data) {
                             return `
-                                         <div class="w-75 btn-group" role="group">
-                                                    <a href="/SA/UserInRole/Upsert?id=${data}"
-                                           class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
-                                             <a onClick=Delete('${data}')
-                                           class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i>Delete</a>
+                                                  <div class='btn-group'><button type='button' class='btn btn-danger dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Action</button>
+                                        <div class='dropdown-menu shadow animated--grow-in'>
+                                                <a class='btn btn-info dropdown-item' data-dropdown-css-class="select2-danger" href="/SA/UserInRole/Upsert?id=${data}"><i class='fas fa-pencil-alt'></i>Edit</a>
+                                        <a href='#' id='delete' onclick = onClick=Delete('${data}'); class='dropdown-item'><i class='fas fa-trash-alt'></i>Delete</a>
+                                        </div> 
                                         </div>
-                                            `
+
+
+
+                                            
+                                     `
                         },
                         "width": "5%"
                     }
+                    //, {
+                    //    "data": "userID",
+                    //    "render": function (data) {
+                    //        return `
+                    //                            // <div class="w-75 btn-group" role="group">
+                    //                            //            <a href="/SA/UserInRole/Upsert?id=${data}"
+                    //                            //   class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                    //                            //     <a onClick=Delete('${data}')
+                    //                            //   class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i>Delete</a>
+                    //                            //</div>
+                    //                                      <div class='btn-group'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Action</button>
+                    //                            <div class='dropdown-menu shadow animated--grow-in'><a class='btn btn-info dropdown-item' href="/SA/UserInRole/Upsert?id=${data}"><i class='fas fa-pencil-alt'></i>Edit</a>
+                    //                            <a href='#' id='delete' onclick = onClick=Delete('${data}'); class='dropdown-item'><i class='fas fa-trash-alt'></i>Delete</a>
+                    //                    </div>
+                    //                    </div>
+                    //                                `
+                    //    },
+                    //    "width": "5%"
+                    //}
                 ]
             });
 

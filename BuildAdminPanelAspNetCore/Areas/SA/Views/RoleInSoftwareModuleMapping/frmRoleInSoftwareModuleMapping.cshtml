@@ -1,220 +1,174 @@
-﻿@{
+﻿@model BuildAdminPanelAspNetCore.Areas.SA.Models.BEL.RoleInSoftwareModuleBEL
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/css/customcss/checkboxbutton.css" rel="stylesheet" />
+<div class="container p-3">
+    <div class="card">
+        <div class="card-header">
+            <div class="row pt-4">
+                <div class="col-6">
+                    <h2 class="text-primary">Role In Menu Mapping</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label asp-for="RoleID" class="form-label mt-4">Role</label>
+                <select asp-for="RoleID" class="form-control select2" style="width: 100%;">
+                    @*<option disabled selected>---Select Role---</option>*@
+                </select>
+                <span asp-validation-for="RoleID" class="text-danger"></span>
+            </div>
+            </br>
+            <table id="tblData" class="table table-bordered table-striped table-responsive" cellspacing="0" style="width:100%">
 
-<script src="~/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<link href="~/Content/CSS/InputText.css" rel="stylesheet" />
+            @*<table id="tblData" class="table table-bordered table-striped table-responsive" style="width:100%">*@
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th>Menu Id</th>
+                        <th>Menu Name</th>
+                        <th>Submenu Id</th>
+                        <th>Submenu Name </th>
+                        <th>IsActive</th>
+@*                        <th>Action</th>*@
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="card-foorter">
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" style="width:200px">Save</button>
+        </div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        EventPermission();
+    </div>
+</div>
+
+@section Scripts{
+    @*<script src="~/js/form.js">*@
+    <script>
+        var dataTable;
+
+        $(document).ready(function () {
+            loadDataTable();
+        });
         LoadRole();
-        GridDataLoad();
+        //LoadEmployee();
+        //Initialize Select2 Elements
+        $('.select2').select2()
 
+        ////Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
         function LoadRole() {
+            debugger;
             $.ajax({
-                url: '/Role/GetRole',
-                type: 'GET',
-                dataType: 'JSON',
-                data: "{}",
-                contentType: "application/json; charset=utf-8",
+                url: '/SA/UserInRole/GetRoles',
                 success: function (data) {
-                    $.each(data, function (i, item) {
-                        $('#RoleID').append($('<option>', { value: item.RoleID, html: item.RoleName }, '<option/>'));
+                    $.each(data.data, function (i, item) {
+                        //console.log(data.data);
+                        //console.log(item);
+                        $("#RoleID").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                        //$('#RoleID').append('<Option value=' + item.roleID + '>' + item.roleName + '</Option>');
                     });
-                },
+                }
+            });
+        }
 
-                error: function () {
-                    alert("Failed to load...");
-                }
-            });
-        }
-       
-       
-        function GridDataLoad()
-        {
-            var RoleID = $('#RoleID').val();
-            $.ajax({
-                type: "POST",
-                url: '/RoleInSoftwareModuleMapping/GetRoleInSoftwareModuleMappingList',
-                data: JSON.stringify({ RoleID: RoleID }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    if (data.length>0) {
-                        $("#MainGrid").data("kendoGrid").dataSource.data([]);
-                        $('#MainGrid').data('kendoGrid').dataSource.data(data);
-                    }
-                    else {
-                        AcknowledgeMsg();
-                    }
-                },
-                error: function () {
-                    alert("Failed to load Category!!");
-                }
-            });
-        }
         $('#RoleID').change(function () {
-            var RoleID = $(this).val();
-            GridDataLoad()
-        });
-        //Initializing Main page details Kendo Grid Colums
-        var MainGrid = $('#MainGrid').kendoGrid({
-            dataSource: new kendo.data.DataSource({
-                batch: false,
-                schema: {
-                    model: {
-                        id: "SoftwareID",
-                        fields: {
-                            SoftwareID: { type: "string", editable: false },                           
-                            IsActive: { type: "boolean", editable: true }
-                        }
-                    }
-                },
-                pageSize: 10,
-            }),
-            pageable: {
-                //refresh: true,
-                pageSizes: true, buttonCount: 5
-            },
-            scrollable: true,
-            sortable: true,
-            filterable: true,
-            editable: true,
-            selectable: "row",
-            //selectable: "multiple",
-            toolbar: [{ template: "<input type='text' id='txtInput'  style='float:right' placeholder='Search...' class='k-textbox'>" }, ],
-            navigatable: true,
-            height: 430,
-            // groupable: true,
-            groupable: { messages: { empty: "Item List" } },
-            columnMenu: true,
-            reorderable: true,
-            resizable: true,
-            columns: [
-                
-                 { field: "SoftwareID", title: "Menu Head ID", hidden: true },
-                 { field: "SoftwareName", title: "Menu Head Name" },
-                 { field: "ModuleID", title: "SubHead ID", hidden: true },
-                 { field: "ModuleName", title: "SubHead Name" },
-                 { field: "IsActive", title: "IsActive" }
-
-            ]
-
-        }).data('kendoGrid');
-
-        // Filter table row
-        $("#txtInput").keyup(function () {
-            var val = $(this).val();
-            $("#MainGrid").data("kendoGrid").dataSource.filter({
-                logic: "or",
-                filters: [
-                     { field: "SoftwareID", operator: "contains", value: val },
-                     { field: "SoftwareName", operator: "contains", value: val },
-                     { field: "ModuleID", operator: "contains", value: val },
-                     { field: "ModuleName", operator: "contains", value: val },
-                    // { field: "IsActive", operator: "contains", value: val },
-
-                ]
-            });
+            loadDataTable();
         });
 
-        var gridInput = 0;
-        function GridValidation() {
-            gridInput = 0;
-            var dataSource = $("#MainGrid").data("kendoGrid").dataSource;
-            data = dataSource.data(); // Get Detail Grid Data
-            if (dataSource.view().length > 0) {
-                gridInput = 0;
-            }
-            else {
-                gridInput = 1;
-            }
+        function loadDataTable() {
+            var id = $('#RoleID').val();
+            $.ajax({
+                url: '/SA/RoleInSoftwareModuleMapping/GetRoleInSoftwareModuleMappingList?RoleID=' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: OnSuccess
+            })
         }
 
-        $('#btnSave').click(function () {
-
-            GridValidation();
-
-
-            if (gridInput == 0) {
-                var dataSource = $("#MainGrid").data("kendoGrid").dataSource;
-                var filters = dataSource.filter();
-                var allData = dataSource.data();
-                var query = new kendo.data.Query(allData);
-                var data = query.filter(filters).data;            
-                master.detailsList = [];
-
-                    for (var i = data.length - 1; i >= 0; i--) {
-                        details.RoleID = $('#RoleID').val();                       
-                        details.SoftwareID = data[i].SoftwareID;
-                        details.ModuleID = data[i].ModuleID;
-                        details.IsActive = data[i].IsActive;
-                       
-                        master.detailsList.push(details);
-                        details = { "RoleID": "","SoftwareID": "", "ModuleID": "", "IsActive": "" };
+        function OnSuccess(response) {
+            console.log(response);
+            $('#tblData').DataTable({
+                bProcessing: true,
+                lengthChange: true,
+                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                bfilter: true,
+                bSort: true,
+                destroy: true,
+                bPaginate: true,
+                data: response.data,
+                responsive: true,
+                "columns": [
+                    /*           { "data": "formID", "width": "15%" },*/
+                    { "data": "softwareID", "width": "15%" },
+                    { "data": "softwareName", "width": "15%" },
+                    { "data": "moduleID", "width": "15%" },
+                    { "data": "moduleName", "width": "15%" },
+                    //{ "data": "empCode", "width": "15%" },
+                    //{ "data": "empName", "width": "15%" },
+                    //{ "data": "password", "width": "15%" },
+                    //{ "data": "confirmPassword", "width": "15%" },
+                    {
+                        data: 'isActive',
+                        render: function (data, type, row) {
+                            if (row.isActive === true) {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '" checked>';
+                                return '<div class="cat action"><label><input type="checkbox" class="checkbox" value="' + data + '" checked><span>Select</span></label> </div>'
+                            } else {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '">';
+                                return '<div class="cat action"><label><input type="checkbox" class="checkbox" value="' + data + '"><span>Select</span></label> </div>'
+                            }
+                        },
+                        "width": "15%"
                     }
-
-                
-                $.ajax({
-                    url: '/RoleInSoftwareModuleMapping/OperationsMode',
-                    data: JSON.stringify(master),
-                    type: 'POST',
-                    contentType: 'application/json;',
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.Status == "Yes") {
-                   
-                            OperationMsg(data.Mode);
+                ]
+            }).columns([0,2]).visible(false);;
+        }
+       
+        debugger;
+        function Delete(data) {
+            //console.log(data);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        //url: url,
+                        //type: 'DELETE',
+                        url: "/sa/UserInRole/delete/",
+                        data: { "id": data },
+                        type: "DELETE",
+                        success: function (data) {
+                            if (data.success) {
+                                dataTable.ajax.reload();
+                                toastr.success(data.message);
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
                         }
-                        else {
-                            ErrorFrmServerMsg(data.Status);
-                        }
+                    })
+                }
+            })
+        }
 
-                    },
-                    error: function () { ErrorFrmClientMsg(); },
-                    // complete: function () { CompletedMsg(); },
-                }); //End of ajax call
-            }
-            else {
-                ValidationMsg();
-            }
+    </script>
+}
 
-        });
-        var master = { "detailsList": [] };
-        var details = { "RoleID": "", "SoftwareID": "", "ModuleID": "",  "IsActive": "" };
-    });
-</script>
-
-
-        <div class="box-header with-border">@*Form Title*@
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <div id="MessageText"></div></div>
-            <div class="col-xs-0 col-sm-0 col-md-8 col-lg-8">
-                <div style="text-align:right;">
-                    <button id="btnSave" class="btn btn-primary btn-lg" type="button"><i class="glyphicon glyphicon-save"></i>Save</button>
-                    @*<button id="btnView" class="btn btn-primary btn-lg" type="button"><i class="glyphicon glyphicon-search"></i>View</button>
-        <button id="btnDelete" class="btn btn-primary btn-lg" type="button"><i class="glyphicon glyphicon-trash"></i>Delete</button>*@
-                    <button id="btnReset" class="btn btn-primary btn-lg" type="button"><i class="glyphicon glyphicon-refresh"></i>Reset</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="box-body">@*Form Body Content*@
-            <div class="row">
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                    <div class="input-group">
-                        <span class="input-group-addon">Role:</span>
-                        <select id="RoleID" class="form-control ">@*<option> </option>*@</select>                        
-                    </div> 
-               </div>
-            </div>
-           
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div id="MainGrid" class="MainGrid"></div>
-                </div>
-            </div>
-        </div>
-      <div class="box-footer">@*Form Footer*@</div>
 
 

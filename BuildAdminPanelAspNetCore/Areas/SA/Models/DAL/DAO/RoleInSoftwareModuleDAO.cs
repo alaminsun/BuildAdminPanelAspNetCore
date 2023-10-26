@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using RMS_Square.Areas.SA.Models.BEL;
-using RMS_Square.DAL.Gateway;
-using RMS_Square.Universal.Gateway;
-using Systems.Universal;
+﻿
 
-namespace RMS_Square.Areas.SA.Models.DAL.DAO
+using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+using BuildAdminPanelAspNetCore.Universal;
+using System.Data;
+
+namespace BuildAdminPanelAspNetCore.Areas.SA.Models.DAL.DAO
 {
     public class RoleInSoftwareModuleDAO:ReturnData
     {
-        DBConnection dbConn = new DBConnection();
-        // SaHelper saHelper = new SaHelper();
-        DBHelper saHelper = new DBHelper();
+        DataBaseConnection dbConn = new DataBaseConnection();
+        SaHelper saHelper = new SaHelper();
+        IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
         public Boolean SaveUpdate(RoleInSoftwareModuleBEL master)
         {
             bool IsTrue = false;
@@ -41,6 +37,38 @@ namespace RMS_Square.Areas.SA.Models.DAL.DAO
                 }
             }
             return IsTrue;
+        }
+        public IList<RoleInSoftwareModuleBEL> GetRoleInSoftwareModuleMapping(string RoleID)
+        {
+            string roleID = _httpContextAccessor.HttpContext.Session.GetString("RoleID");
+
+            if ((RoleID == "" || RoleID == null || RoleID == "null"))
+            {
+                RoleID = roleID;
             }
+            else
+            {
+                RoleID = (string?)RoleID;
+            }
+            string Qry = "Select c.SoftwareID,c.SoftwareName,c.ModuleID,c.ModuleName,ISNULL(d.IsActive,'false') IsActive  from  " +
+                        " (Select a.SoftwareID,a.SoftwareName,b.ModuleID,b.ModuleName from Sa_Software  a,Sa_Module  b Where upper(a.IsActive)=upper('true') and upper(b.IsActive)=upper('true') /* and a.SoftwareID='02' */)  c " +
+                        " LEFT JOIN Sa_RoleInSM  d ON c.SoftwareID+c.ModuleID=d.SoftwareID+d.ModuleID and d.RoleID='" + RoleID + "' Order By c.SoftwareID,c.ModuleID";
+
+            DataTable dt = saHelper.DataTableFn(dbConn.SAConnStrReader(), Qry);
+            List<RoleInSoftwareModuleBEL> item;
+            //using lamdaexpression
+            item = (from DataRow row in dt.Rows
+                    select new RoleInSoftwareModuleBEL
+                    {
+
+                        SoftwareID = row["SoftwareID"].ToString(),
+                        SoftwareName = row["SoftwareName"].ToString(),
+                        ModuleID = row["ModuleID"].ToString(),
+                        ModuleName = row["ModuleName"].ToString(),
+                        IsActive = Convert.ToBoolean(row["IsActive"].ToString())
+                    }).ToList();
+
+            return item;
+        }
     }
 }

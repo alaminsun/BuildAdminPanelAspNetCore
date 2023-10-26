@@ -3,7 +3,7 @@ using BuildAdminPanelAspNetCore.Areas.SA.Models.ViewModels;
 using BuildAdminPanelAspNetCore.Models.DAL.DAO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using RBuildAdminPanelAspNetCore.Models.DAL.DAO;
+using BuildAdminPanelAspNetCore.Models.DAL.DAO;
 
 namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {
