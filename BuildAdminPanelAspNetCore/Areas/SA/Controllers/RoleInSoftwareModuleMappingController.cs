@@ -18,7 +18,7 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
         [Route("frmRoleInSoftwareModuleMapping")]
         public ActionResult frmRoleInSoftwareModuleMapping()
         {
-            if (HttpContext.Session.GetString("UserID") != null)
+            if (HttpContext.Session.GetString("UserID") != null)                
             {
                 return View();
             }
