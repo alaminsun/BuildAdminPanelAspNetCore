@@ -1,49 +1,54 @@
-﻿@model BuildAdminPanelAspNetCore.Areas.SA.Models.BEL.RoleInSoftwareModuleBEL
+﻿@model BuildAdminPanelAspNetCore.Areas.SA.Models.BEL.RoleInSoftwareMasterBEL
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/css/customcss/checkboxbutton.css" rel="stylesheet" />
 <div class="container p-3">
-    <div class="card">
-        <div class="card-header">
-            <div class="row pt-4">
-                <div class="col-6">
-                    <h2 class="text-primary">Role In Menu Mapping</h2>
+    
+        <div class="card">
+            <div class="card-header">
+                <div class="row pt-4">
+                    <div class="col-6">
+                        <h2 class="text-primary">Role In Menu Mapping</h2>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label asp-for="RoleID" class="form-label mt-4">Role</label>
-                <select asp-for="RoleID" class="form-control select2" style="width: 100%;">
-                    @*<option disabled selected>---Select Role---</option>*@
-                </select>
-                <span asp-validation-for="RoleID" class="text-danger"></span>
+        <form id="roleMenu" method="post">
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="RoleID" class="form-label mt-4">Role</label>
+                    <select asp-for="RoleID" id="RoleID" name="RoleID" class="form-control select2" style="width: 100%;">
+                        @*<option disabled selected>---Select Role---</option>*@
+                    </select>
+                    <span asp-validation-for="RoleID" class="text-danger"></span>
+                </div>
+                </br>
+                <table id="tblData" class="table table-bordered table-striped table-responsive" cellspacing="0" style="width:100%">
+
+                    @*<table id="tblData" class="table table-bordered table-striped table-responsive" style="width:100%">*@
+                    <thead class="thead-dark">
+                        <tr class="text-center">
+                            <th>Menu Id</th>
+                            <th>Menu Name</th>
+                            <th>Submenu Id</th>
+                            <th>Submenu Name </th>
+                            <th>IsActive</th>
+                            @*                        <th>Action</th>*@
+                        </tr>
+                    </thead>
+                </table>
             </div>
-            </br>
-            <table id="tblData" class="table table-bordered table-striped table-responsive" cellspacing="0" style="width:100%">
-
-            @*<table id="tblData" class="table table-bordered table-striped table-responsive" style="width:100%">*@
-                <thead class="thead-dark">
-                    <tr class="text-center">
-                        <th>Menu Id</th>
-                        <th>Menu Name</th>
-                        <th>Submenu Id</th>
-                        <th>Submenu Name </th>
-                        <th>IsActive</th>
-@*                        <th>Action</th>*@
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-    <div class="card-foorter">
-        <div class="col-12">
             <button type="submit" class="btn btn-primary" style="width:200px">Save</button>
+    </form>
         </div>
+@*        <div class="card-foorter">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary" style="width:200px">Save</button>
+            </div>
 
-    </div>
+        </div>*@
+
 </div>
 
 @section Scripts{
@@ -53,33 +58,8 @@
 
         $(document).ready(function () {
             loadDataTable();
+           
         });
-        LoadRole();
-        //LoadEmployee();
-        //Initialize Select2 Elements
-        $('.select2').select2()
-
-        ////Initialize Select2 Elements
-        $('.select2bs4').select2({
-            theme: 'bootstrap4'
-        })
-        function LoadRole() {
-            debugger;
-            $.ajax({
-                url: '/SA/UserInRole/GetRoles',
-                success: function (data) {
-                    $.each(data.data, function (i, item) {
-                        //console.log(data.data);
-                        //console.log(item);
-                        $("#RoleID").append($('<option>', {
-                            value: item.value,
-                            text: item.text
-                        }));
-                        //$('#RoleID').append('<Option value=' + item.roleID + '>' + item.roleName + '</Option>');
-                    });
-                }
-            });
-        }
 
         $('#RoleID').change(function () {
             loadDataTable();
@@ -100,18 +80,36 @@
             $('#tblData').DataTable({
                 bProcessing: true,
                 lengthChange: true,
-                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]],
                 bfilter: true,
                 bSort: true,
                 destroy: true,
                 bPaginate: true,
-                data: response.data,
+                data: response,
                 responsive: true,
-                "columns": [
+                columns: [
                     /*           { "data": "formID", "width": "15%" },*/
-                    { "data": "softwareID", "width": "15%" },
+                    //{ "data": "softwareID", "width": "15%" },
+                    {
+                        'data': 'softwareID', "visible": false,
+                        render: function (data, type, row) {
+                            return '<input type="text" id="SoftwareID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + data + '>';
+                        }
+                    },
+                    //{
+                    //    'data': 'softwareID',
+                    //    render: function (data, type, row) {
+                    //        return '<input type="text" name="Batch_No[]" id="Batch_No_' + row.sl + '" class="form-control text-right" tabindex="7" placeholder="Batch ID" required="" aria-required="true" value= ' + data + '>';
+                    //    }
+                    //},
                     { "data": "softwareName", "width": "15%" },
-                    { "data": "moduleID", "width": "15%" },
+                    //{ "data": "moduleID", "width": "15%" },
+                    {
+                        'data': 'moduleID',
+                        render: function (data, type, row) {
+                            return '<input type="text" id="ModuleID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + data + '>';
+                        }
+                    },
                     { "data": "moduleName", "width": "15%" },
                     //{ "data": "empCode", "width": "15%" },
                     //{ "data": "empName", "width": "15%" },
@@ -122,19 +120,113 @@
                         render: function (data, type, row) {
                             if (row.isActive === true) {
                                 //return '<input type="checkbox" class="checkbox" value="' + data + '" checked>';
-                                return '<div class="cat action"><label><input type="checkbox" class="checkbox" value="' + data + '" checked><span>Select</span></label> </div>'
+                                return '<div class="cat action"><label><input type="checkbox" id="IsActive_' + row.sl + '" class="checkbox" onclick="changeStatuse(' + row.sl + ');" value="' + data + '" checked><span>Select</span></label> </div>'
                             } else {
                                 //return '<input type="checkbox" class="checkbox" value="' + data + '">';
-                                return '<div class="cat action"><label><input type="checkbox" class="checkbox" value="' + data + '"><span>Select</span></label> </div>'
+                                return '<div class="cat action"><label><input type="checkbox" id="IsActive_' + row.sl + '" class="checkbox" onclick="changeStatuse(' + row.sl + ');" value="' + data + '"><span>Select</span></label> </div>'
                             }
                         },
                         "width": "15%"
                     }
                 ]
-            }).columns([0,2]).visible(false);;
+            });
         }
-       
-        debugger;
+        $("#roleMenu").submit(function (event) {
+
+            var detailArr = [];
+            detailArr.length = 0;
+            var b = 1;
+            $.each($("#tblData tbody tr"), function () {
+                var isActiveCheckboxValue = $('#IsActive_' + b).val();
+                var isActiveCheckboxClick = $('#IsActive_' + b).is(':checked')
+                if (isActiveCheckboxClick == true) {
+                    isActiveCheckboxValue = "True"
+                }
+                else {
+                    isActiveCheckboxValue = "False"
+                }
+                detailArr.push({
+                    SoftwareID: $('#SoftwareID_' + b).val(),
+                    ModuleID: $('#ModuleID_' + b).val(),
+                    //SoftwareID: rowData.softwareID,
+                    //ModuleID: rowData.moduleID,
+                     //IsActive: rowData.isActive,
+                    IsActive: isActiveCheckboxValue,
+                });
+                console.log(detailArr);
+                b = b + 1;
+            });
+
+            //var input = InputValidation('Quantity_' + row) + InputValidation('Medicine_Name_' + row);
+            //if (input == 0) {
+            var formData = {
+                RoleID: $("#RoleID").val(),
+                DetailList: detailArr
+            };
+            //}
+
+            //alert($("#Status").val());
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Upsert", "RoleInSoftwareModuleMapping")',
+                data: formData,
+                dataType: "json",
+                encode: true,
+            }).done(function (data) {
+                console.log(data);
+                //alert("saved");
+                toastr.success('Data saved successfully');
+                //window.location.href = "/Transaction/Purchase?from=edit";
+
+                //toastr.success('Current Day & Time');
+                //alert("successfully updated");
+                //location.assign('@Url.Action("_ManagePurchase")');
+                location.reload();
+            });
+
+            event.preventDefault();
+
+        });
+        LoadRole();
+        //LoadEmployee();
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        ////Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+        function LoadRole() {
+            $.ajax({
+                url: '/SA/UserInRole/GetRoles',
+                success: function (data) {
+                    $.each(data.data, function (i, item) {
+                        //console.log(data.data);
+                        //console.log(item);
+                        $("#RoleID").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                        //$('#RoleID').append('<Option value=' + item.roleID + '>' + item.roleName + '</Option>');
+                    });
+                }
+            });
+        }
+
+
+        function changeStatuse(sl) {
+            //var isActive = $('#IsActive_' + sl).val();
+            var isActiveCheckboxValue = $('#IsActive_' + sl).val();
+            var isActiveCheckboxClick = $('#IsActive_' + sl).is(':checked')
+            if (isActiveCheckboxClick == true) {
+                isActiveCheckboxValue = "True"
+            }
+            else {
+                isActiveCheckboxValue = "False"
+            }
+            alert(isActiveCheckboxValue);
+        }
+
         function Delete(data) {
             //console.log(data);
             Swal.fire({

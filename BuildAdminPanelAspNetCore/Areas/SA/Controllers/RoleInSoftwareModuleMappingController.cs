@@ -29,70 +29,38 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
         public ActionResult GetRoleInSoftwareModuleMappingList(string RoleID)
         {
             var roleInSoftwareModuleMappingList = primaryDAO.GetRoleInSoftwareModuleMapping(RoleID);
-            return Json(new { data = roleInSoftwareModuleMappingList });
+            return Json(data:roleInSoftwareModuleMappingList);
         }
-
-        //[HttpGet]
-        //[Route("Upsert")]
-        //public IActionResult Upsert(string id)
-        //{
-        //    //UserInRoleBEL userInRole = new();
-        //    //var roleId = userInRole.userInRoleBEL.RoleID
-        //    UserInRoleBEL userInRole = new();
-        //    {
-        //        //userInRole = new(),
-        //        userInRole.RoleList = roleDAO.GetRoleList().Select(c => new SelectListItem
-        //        {
-        //            Value = c.RoleID.ToString(),
-        //            Text = c.RoleName
-        //        }).ToList();
-        //        userInRole.EmpList = primaryDAO.GetEmployeeNotYetAssignedList(userInRole.RoleID).Select(c => new SelectListItem
-        //        {
-        //            Value = c.EmpID.ToString(),
-        //            Text = c.EmpName
-        //        }).ToList();
-        //    };
-
-        //    if (id == "" || id == null)
-        //    {
-        //        return View(userInRole);
-        //    }
-        //    else
-        //    {
-        //        userInRole = primaryDAO.GetUserInRoleById(id);
-        //        //return View(form);
-        //        return View(userInRole);
-        //    }
-        //}
-        //[HttpPost]
-        //[Route("Upsert")]
+        [HttpPost]
+        [Route("Upsert")]
         //[ValidateAntiForgeryToken]
-        //public IActionResult Upsert(UserInRoleBEL obj)
-        //{
-        //    ModelState.Remove("UserID");
-        //    if (ModelState.IsValid)
-        //    {
+        public ActionResult Upsert(RoleInSoftwareMasterBEL obj)
+        {
 
-        //        if (obj.UserID != "" || obj.UserID != null)
-        //        {
-        //            //_unitOfWork.Company.Add(obj);
-        //            primaryDAO.SaveUpdate(obj);
+            if (ModelState.IsValid)
+            {
 
-        //            TempData["success"] = "user is assigned to role successfully";
-        //        }
-        //        //else
-        //        //{
-        //        //    //_unitOfWork.Company.Update(obj);
-        //        //    primaryDAO.SaveUpdate(obj);
-        //        //    TempData["success"] = "role updated successfully";
-        //        //}
-        //        //_unitOfWork.Save();
+                if (obj.RoleID != "" || obj.RoleID != null)
+                {
+                    //_unitOfWork.Company.Add(obj);
+                    //primaryDAO.SaveUpdate(obj);
 
-        //        return RedirectToAction("frmUserInRole");
-        //    }
-        //    return View(obj);
+                    //TempData["success"] = "saved successfully";
+                }
+                //else
+                //{
+                //    //_unitOfWork.Company.Update(obj);
+                //    primaryDAO.SaveUpdate(obj);
+                //    TempData["success"] = "role updated successfully";
+                //}
+                //_unitOfWork.Save();
 
-        //}
+                //return RedirectToAction("frmUserInRole");
+                return Json(new { ID = primaryDAO.MaxID, Mode = primaryDAO.IUMode, Status = "Yes" });
+            }
+            return View(obj);
+
+        }
 
         //public ActionResult OperationsMode(RoleInSoftwareModuleBEL master)
         //{
