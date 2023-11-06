@@ -5,15 +5,15 @@
 }
 <link href="~/css/customcss/checkboxbutton.css" rel="stylesheet" />
 <div class="container p-3">
-    
-        <div class="card">
-            <div class="card-header">
-                <div class="row pt-4">
-                    <div class="col-6">
-                        <h2 class="text-primary">Role In Menu Mapping</h2>
-                    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row pt-4">
+                <div class="col-6">
+                    <h2 class="text-primary">Role In Menu Mapping</h2>
                 </div>
             </div>
+        </div>
         <form id="roleMenu" method="post">
             <div class="card-body">
                 <div class="form-group">
@@ -40,14 +40,14 @@
                 </table>
             </div>
             <button type="submit" class="btn btn-primary" style="width:200px">Save</button>
-    </form>
-        </div>
-@*        <div class="card-foorter">
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary" style="width:200px">Save</button>
-            </div>
+        </form>
+    </div>
+    @*        <div class="card-foorter">
+    <div class="col-12">
+    <button type="submit" class="btn btn-primary" style="width:200px">Save</button>
+    </div>
 
-        </div>*@
+    </div>*@
 
 </div>
 
@@ -58,7 +58,7 @@
 
         $(document).ready(function () {
             loadDataTable();
-           
+
         });
 
         $('#RoleID').change(function () {
@@ -77,7 +77,7 @@
 
         function OnSuccess(response) {
             console.log(response);
-            $('#tblData').DataTable({
+            dataTable = $('#tblData').DataTable({
                 bProcessing: true,
                 lengthChange: true,
                 //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]],
@@ -86,30 +86,46 @@
                 destroy: true,
                 bPaginate: true,
                 data: response,
+                "columnDefs": [
+                    { "orderable": false, "targets": 3 },
+                    { "visible": true, "targets": 1 }
+                ],
                 responsive: true,
                 columns: [
                     /*           { "data": "formID", "width": "15%" },*/
-                    //{ "data": "softwareID", "width": "15%" },
-                    {
-                        'data': 'softwareID', "visible": false,
-                        render: function (data, type, row) {
-                            return '<input type="text" id="SoftwareID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + data + '>';
-                        }
-                    },
+                    { "data": "softwareID", "width": "15%" },
+                    //{ 'visible': false, 'targets': [0] },
+                    //{
+                    //    'data': null,
+                    //    render: function (data, type, row) {
+                    //        return '<input type="hidden" id="SoftwareID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + row.softwareID + '>';
+                    //    }
+                    //},
                     //{
                     //    'data': 'softwareID',
                     //    render: function (data, type, row) {
                     //        return '<input type="text" name="Batch_No[]" id="Batch_No_' + row.sl + '" class="form-control text-right" tabindex="7" placeholder="Batch ID" required="" aria-required="true" value= ' + data + '>';
                     //    }
                     //},
+                    //{ "data": "softwareName", "width": "15%",
+                    //    render: function (data, type, row) {
+                    //        return '<input type="text" class="form-control text-right" tabindex="7" required="" readonly aria-required="true" value= ' + row.softwareName + '><input type="hidden" id="SoftwareID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + row.softwareID + '>';
+                    //          }
+                    //},
                     { "data": "softwareName", "width": "15%" },
-                    //{ "data": "moduleID", "width": "15%" },
-                    {
-                        'data': 'moduleID',
-                        render: function (data, type, row) {
-                            return '<input type="text" id="ModuleID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + data + '>';
-                        }
-                    },
+                    { "data": "moduleID", "width": "15%" },
+                    //{
+                    //    'data': 'moduleID',
+                    //    render: function (data, type, row) {
+                    //        return '<input type="text" id="ModuleID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + data + '>';
+                    //    }
+                    //},
+                    //{
+                    //    "data": "moduleName", "width": "15%",
+                    //    render: function (data, type, row) {
+                    //        return '<input type="text" class="form-control text-right" tabindex="7" required="" readonly aria-required="true" value= ' + row.moduleName + '><input type="hidden" id="ModuleID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + row.moduleID + '>';
+                    //    }
+                    //},
                     { "data": "moduleName", "width": "15%" },
                     //{ "data": "empCode", "width": "15%" },
                     //{ "data": "empName", "width": "15%" },
@@ -120,10 +136,10 @@
                         render: function (data, type, row) {
                             if (row.isActive === true) {
                                 //return '<input type="checkbox" class="checkbox" value="' + data + '" checked>';
-                                return '<div class="cat action"><label><input type="checkbox" id="IsActive_' + row.sl + '" class="checkbox" onclick="changeStatuse(' + row.sl + ');" value="' + data + '" checked><span>Select</span></label> </div>'
+                                return '<div class="cat action"><label><input type="checkbox" id="IsActive_' + row.sl + '" class="checkbox" value="' + data + '" checked><span>Select</span></label> </div>'
                             } else {
                                 //return '<input type="checkbox" class="checkbox" value="' + data + '">';
-                                return '<div class="cat action"><label><input type="checkbox" id="IsActive_' + row.sl + '" class="checkbox" onclick="changeStatuse(' + row.sl + ');" value="' + data + '"><span>Select</span></label> </div>'
+                                return '<div class="cat action"><label><input type="checkbox" id="IsActive_' + row.sl + '" class="checkbox" value="' + data + '"><span>Select</span></label> </div>'
                             }
                         },
                         "width": "15%"
@@ -135,7 +151,7 @@
 
             var detailArr = [];
             detailArr.length = 0;
-            var b = 1;
+            var b = 0;
             $.each($("#tblData tbody tr"), function () {
                 var isActiveCheckboxValue = $('#IsActive_' + b).val();
                 var isActiveCheckboxClick = $('#IsActive_' + b).is(':checked')
@@ -145,12 +161,16 @@
                 else {
                     isActiveCheckboxValue = "False"
                 }
+
+                var hiddenColumnData1 = $("#tblData").DataTable().column(0).data();
+                var hiddenColumnData2 = $("#tblData").DataTable().column(2).data();
+
                 detailArr.push({
-                    SoftwareID: $('#SoftwareID_' + b).val(),
-                    ModuleID: $('#ModuleID_' + b).val(),
-                    //SoftwareID: rowData.softwareID,
-                    //ModuleID: rowData.moduleID,
-                     //IsActive: rowData.isActive,
+                    //SoftwareID: $('#SoftwareID_' + b).val(),
+                    //ModuleID: $('#ModuleID_' + b).val(),
+                    SoftwareID: hiddenColumnData1[b],
+                    ModuleID: hiddenColumnData2[b],
+                    //IsActive: rowData.isActive,
                     IsActive: isActiveCheckboxValue,
                 });
                 console.log(detailArr);
@@ -172,16 +192,21 @@
                 data: formData,
                 dataType: "json",
                 encode: true,
-            }).done(function (data) {
-                console.log(data);
+            }).done(function (response) {
+                //console.log(response);
+                //alert(response.status);
+                if (response.status == 'Yes') {
+
+                    toastr.success('Data saved successfully');
+                }
                 //alert("saved");
-                toastr.success('Data saved successfully');
+
                 //window.location.href = "/Transaction/Purchase?from=edit";
 
                 //toastr.success('Current Day & Time');
                 //alert("successfully updated");
                 //location.assign('@Url.Action("_ManagePurchase")');
-                location.reload();
+                //location.reload();
             });
 
             event.preventDefault();
@@ -214,18 +239,18 @@
         }
 
 
-        function changeStatuse(sl) {
-            //var isActive = $('#IsActive_' + sl).val();
-            var isActiveCheckboxValue = $('#IsActive_' + sl).val();
-            var isActiveCheckboxClick = $('#IsActive_' + sl).is(':checked')
-            if (isActiveCheckboxClick == true) {
-                isActiveCheckboxValue = "True"
-            }
-            else {
-                isActiveCheckboxValue = "False"
-            }
-            alert(isActiveCheckboxValue);
-        }
+        //function changeStatuse(sl) {
+        //    //var isActive = $('#IsActive_' + sl).val();
+        //    var isActiveCheckboxValue = $('#IsActive_' + sl).val();
+        //    var isActiveCheckboxClick = $('#IsActive_' + sl).is(':checked')
+        //    if (isActiveCheckboxClick == true) {
+        //        isActiveCheckboxValue = "True"
+        //    }
+        //    else {
+        //        isActiveCheckboxValue = "False"
+        //    }
+        //    alert(isActiveCheckboxValue);
+        //}
 
         function Delete(data) {
             //console.log(data);

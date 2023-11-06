@@ -60,7 +60,7 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Models.DAL.DAO
             List<RoleInSoftwareModuleBEL> items = new List<RoleInSoftwareModuleBEL>();
             var result = dt;
             var length = result.Rows.Count;
-            int Sl = 1;
+            int Sl = 0;
             if (length > 0)
             {
                 foreach (DataRow row in result.Rows)

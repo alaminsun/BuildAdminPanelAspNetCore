@@ -43,9 +43,10 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
                 if (obj.RoleID != "" || obj.RoleID != null)
                 {
                     //_unitOfWork.Company.Add(obj);
-                    //primaryDAO.SaveUpdate(obj);
+                    primaryDAO.SaveUpdate(obj);
 
                     //TempData["success"] = "saved successfully";
+                    return new JsonResult(new { Status = "Yes" });
                 }
                 //else
                 //{
@@ -55,8 +56,9 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
                 //}
                 //_unitOfWork.Save();
 
-                //return RedirectToAction("frmUserInRole");
-                return Json(new { ID = primaryDAO.MaxID, Mode = primaryDAO.IUMode, Status = "Yes" });
+                return RedirectToAction("frmRoleInSoftwareModuleMapping");
+                //return Json(new { ID = primaryDAO.MaxID, Mode = primaryDAO.IUMode, Status = "Yes" });
+               
             }
             return View(obj);
 
