@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,5 +23,26 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Models.BEL
         public Boolean PrintPermission { get; set; }
 
         public virtual ICollection<RoleInFormBEL> detailsList { get; set; }
+        public int SL { get; internal set; }
     }
+
+    public class RoleInFormMaster
+    {
+
+        public string RoleID { get; set; }
+        public List<RoleInFormDetail> DetailList { get; set; }
+
+    }
+    public class RoleInFormDetail
+    {
+        public string SoftwareID { get; set; }
+        public string ModuleID { get; set; }
+        public string FormID { get; set; }
+        public Boolean ViewPermission { get; set; }
+        public Boolean SavePermission { get; set; }
+        public Boolean EditPermission { get; set; }
+        public Boolean DeletePermission { get; set; }
+        public Boolean PrintPermission { get; set; }
+    }
+
 }

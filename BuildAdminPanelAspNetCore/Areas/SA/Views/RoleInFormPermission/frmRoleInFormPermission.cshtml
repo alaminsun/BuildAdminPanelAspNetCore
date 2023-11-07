@@ -1,247 +1,389 @@
-﻿@{
+﻿@model BuildAdminPanelAspNetCore.Areas.SA.Models.BEL.RoleInSoftwareMasterBEL
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/css/customcss/checkboxbutton.css" rel="stylesheet" />
+<div class="container p-3">
 
-<script src="~/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<link href="~/Content/CSS/InputText.css" rel="stylesheet" />
+    <div class="card">
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        EventPermission();
-        LoadRole();
-        GridDataLoad();
-        function LoadRole() {
+        <form id="roleFormPermission" method="post">
+            <div class="card-header bg-secondary text-white text-center">
+                <h5>Role In Form Permission</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="RoleID" class="form-label mt-4">Role</label>
+                    <select asp-for="RoleID" id="RoleID" name="RoleID" class="form-control select2" style="width: 100%;">
+                        @*<option disabled selected>---Select Role---</option>*@
+                    </select>
+                    <span asp-validation-for="RoleID" class="text-danger"></span>
+                </div>
+                <table id="tblData" class="table table-bordered table-striped table-responsive" cellspacing="0" style="width:100%">
 
-            $.ajax({
-                url: '/Role/GetRoleInSoftwareModuleMapping',
-                type: 'GET',
-                dataType: 'JSON',
-                data: "{}",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    $.each(data, function (i, item) {
-                        $('#RoleID').append($('<option>', { value: item.RoleID, html: item.RoleName }, '<option/>'));
-                    });
-                },
+                    @*<table id="tblData" class="table table-bordered table-striped table-responsive" style="width:100%">*@
+                    <thead class="thead-dark">
+                        <tr class="text-center">
+                            <th>Menu Id</th>
+                            <th>Menu Name</th>
+                            <th>Submenu Id</th>
+                            <th>Submenu Name </th>
+                            <th>Form Id </th>
+                            <th>Form Name </th>
+                            <th>Form URL </th>
+                            <th>Save Permission </th>
+                            <th>Edit Permission </th>
+                            <th>View Permission</th>
+                            <th>Delete Permission </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="card-footer text-muted">
+                <button type="submit" class="btn btn-primary" style="width:300px">Save</button>
+            </div>
+        </form>
+    </div>
 
-                error: function () {
-                    alert("Failed to load...");
-                }
-            });
-        }
-        
-        function GridDataLoad()
-        {
-            var RoleID = $('#RoleID').val();
-       
-            //$('#MainGrid').data('kendoGrid').dataSource.filter([]);
-            //$('#MainGrid').data('kendoGrid').dataSource.data([]);
-            //$(".k-textbox").val("");
 
-            $.ajax({
-                type: "POST",
-                url: '/RoleInFormPermission/GetRoleInFormPermissionList',
-                data: JSON.stringify({ RoleID: RoleID }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    if (data.length>0) {
-                        $('#MainGrid').data('kendoGrid').dataSource.data(data);
-                    }
-                    else {
+</div>
 
-                        AcknowledgeMsg();
-                    }
-                },
-                error: function () {
-                    alert("Failed to load Category!!");
-                }
-            });
-        }
-   
-        $('#RoleID').change(function () {           
-            var RoleID = $(this).val();
-            GridDataLoad();
+@section Scripts{
+    @*<script src="~/js/form.js">*@
+    <script>
+        var dataTable;
+
+        $(document).ready(function () {
+            loadDataTable();
+
         });
-        // Filter table row
 
- 
-        //Initializing Main page details Kendo Grid Colums
-        var MainGrid = $('#MainGrid').kendoGrid({
-            dataSource: new kendo.data.DataSource({
-                batch: true,
-                schema: {
-                    model: {
-                        id: "SoftwareID",
-                        fields: {
-                            SoftwareID: { type: "string", editable: false },
-                            ViewPermission: { type: "boolean", editable: true },
-                            SavePermission: { type: "boolean", editable: true },
-                            EditPermission: { type: "boolean", editable: true },
-                            DeletePermission: { type: "boolean", editable: true },
-                            PrintPermission: { type: "boolean", editable: true },
-                        }
+        $('#RoleID').change(function () {
+            loadDataTable();
+        });
+
+        function loadDataTable() {
+            var id = $('#RoleID').val();
+            $.ajax({
+                url: '/SA/RoleInFormPermission/GetRoleInFormPermissionList?RoleID=' + id,
+                type: 'POST',
+                dataType: 'json',
+                success: OnSuccess
+            })
+        }
+
+        function OnSuccess(response) {
+            console.log(response);
+            dataTable = $('#tblData').DataTable({
+                bProcessing: true,
+                lengthChange: true,
+                //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                bfilter: true,
+                bSort: true,
+                destroy: true,
+                bPaginate: true,
+                //autoWidth:true,
+                data: response,
+                "columnDefs": [
+                    //{ "orderable": false, "targets": 3 },
+                    { "visible": false, "targets": [0,2,4,6] },
+                    //{ "width": "200px", "targets":1 }
+                ],
+                responsive: true,
+                "responsive.columns.adjust": true,
+                columns: [
+                    /*           { "data": "formID", "width": "15%" },*/
+                    { "data": "softwareID" },
+                    //{ 'visible': false, 'targets': [0] },
+                    //{
+                    //    'data': null,
+                    //    render: function (data, type, row) {
+                    //        return '<input type="hidden" id="SoftwareID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + row.softwareID + '>';
+                    //    }
+                    //},
+                    //{
+                    //    'data': 'softwareID',
+                    //    render: function (data, type, row) {
+                    //        return '<input type="text" name="Batch_No[]" id="Batch_No_' + row.sl + '" class="form-control text-right" tabindex="7" placeholder="Batch ID" required="" aria-required="true" value= ' + data + '>';
+                    //    }
+                    //},
+                    //{ "data": "softwareName", "width": "15%",
+                    //    render: function (data, type, row) {
+                    //        return '<input type="text" class="form-control text-right" tabindex="7" required="" readonly aria-required="true" value= ' + row.softwareName + '><input type="hidden" id="SoftwareID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + row.softwareID + '>';
+                    //          }
+                    //},
+                    //{ "data": "softwareName", "width": "30%" },
+                    //{ "data": "softwareName", "width": "30%" },
+                    {
+                        data: 'softwareName',
+                        render: function (data, type, row) {
+                          return row.softwareName;
+                        }, "width": "30%"
+                    },
+                    { "data": "moduleID" },
+                    //{
+                    //    'data': 'moduleID',
+                    //    render: function (data, type, row) {
+                    //        return '<input type="text" id="ModuleID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + data + '>';
+                    //    }
+                    //},
+                    //{
+                    //    "data": "moduleName", "width": "15%",
+                    //    render: function (data, type, row) {
+                    //        return '<input type="text" class="form-control text-right" tabindex="7" required="" readonly aria-required="true" value= ' + row.moduleName + '><input type="hidden" id="ModuleID_' + row.sl + '" class="form-control text-right" tabindex="7" required="" aria-required="true" value= ' + row.moduleID + '>';
+                    //    }
+                    //},
+                    { "data": "moduleName", "width": "30%" },
+                    { "data": "formID"},
+                    { "data": "formName", "width": "30%"},
+                    { "data": "formURL"},
+                    //{ "data": "confirmPassword", "width": "15%" },
+                    {
+                        data: 'savePermission',
+                        render: function (data, type, row) {
+                            if (row.savePermission === true) {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '" checked>';
+                                return '<div class="cat action"><label><input type="checkbox" id="SavePermission_' + row.sl + '" class="checkbox" value="' + data + '" checked><span>Select</span></label> </div>'
+                            } else {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '">';
+                                return '<div class="cat action"><label><input type="checkbox" id="SavePermission_' + row.sl + '" class="checkbox" value="' + data + '"><span>Select</span></label> </div>'
+                            }
+                        }, "width": "15%"
+                       
+                    },
+                                 {
+                        data: 'editPermission',
+                        render: function (data, type, row) {
+                            if (row.editPermission === true) {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '" checked>';
+                                return '<div class="cat action"><label><input type="checkbox" id="EditPermission_' + row.sl + '" class="checkbox" value="' + data + '" checked><span>Select</span></label> </div>'
+                            } else {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '">';
+                                return '<div class="cat action"><label><input type="checkbox" id="EditPermission_' + row.sl + '" class="checkbox" value="' + data + '"><span>Select</span></label> </div>'
+                            }
+                        },"width": "15%"
+                        
+                    },
+                    {
+                        data: 'viewPermission',
+                        render: function (data, type, row) {
+                            if (row.viewPermission === true) {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '" checked>';
+                                return '<div class="cat action"><label><input type="checkbox" id="ViewPermission_' + row.sl + '" class="checkbox" value="' + data + '" checked><span>Select</span></label> </div>'
+                            } else {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '">';
+                                return '<div class="cat action"><label><input type="checkbox" id="ViewPermission_' + row.sl + '" class="checkbox" value="' + data + '"><span>Select</span></label> </div>'
+                            }
+                        }, "width": "15%"
+                       
+                    },
+                    {
+                        data: 'deletePermission',
+                        render: function (data, type, row) {
+                            if (row.deletePermission === true) {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '" checked>';
+                                return '<div class="cat action"><label><input type="checkbox" id="DeletePermission_' + row.sl + '" class="checkbox" value="' + data + '" checked><span>Select</span></label> </div>'
+                            } else {
+                                //return '<input type="checkbox" class="checkbox" value="' + data + '">';
+                                return '<div class="cat action"><label><input type="checkbox" id="DeletePermission_' + row.sl + '" class="checkbox" value="' + data + '"><span>Select</span></label> </div>'
+                            }
+                        }, "width": "15%"
+                        
                     }
-                },
-                pageSize: 20,
-            }),
-            pageable: {
-                //refresh: true,
-                pageSizes: true, buttonCount: 5
-            },
-            scrollable: true,
-            sortable: true,
-            filterable: true,
-            editable: true,
-            selectable: "row",
-            //selectable: "multiple",
-            toolbar: ["excel",{ template: "<input type='text' id='txtInput'  style='float:right' placeholder='Search...' class='k-textbox'>" }, ],        
-            excel: {
-                fileName: "Export.xlsx",
-                allPages: true,
-                filterable: true
-            },
-            navigatable: true,
-            height:800,
-            // groupable: true,
-            groupable: { messages: { empty: "Custom message text" } },
-            columnMenu: true,
-            reorderable: true,
-            resizable: true,
-            columns: [
-
-                 { field: "SoftwareID", title: "Menu HeadID", hidden: true },
-                 { field: "SoftwareName", title: "Menu Head Name" },
-                 { field: "ModuleID", title: "SubHead ID", hidden: true },
-                 { field: "ModuleName", title: "Sub Head Name" },
-                 { field: "FormID", title: "FormID", hidden: true },
-                 { field: "FormName", title: "Form Name" },
-                 { field: "FormURL", title: "Form URL", hidden: true },
-                 { field: "ViewPermission", title: "View Permission" },
-                 { field: "SavePermission", title: "Save Permission" },
-                 { field: "EditPermission", title: "Edit Permission", hidden: true },
-                 { field: "DeletePermission", title: "Delete Permission" },
-                 { field: "PrintPermission", title: "Print Permission", hidden: true },
-            ]
-
-        }).data('kendoGrid');
-
-        $("#txtInput").keyup(function () {
-            var val = $(this).val();
-            $("#MainGrid").data("kendoGrid").dataSource.filter({
-                logic: "or",
-                filters: [
-                     { field: "SoftwareID", operator: "contains", value: val },
-                     { field: "SoftwareName", operator: "contains", value: val },
-                     { field: "ModuleID", operator: "contains", value: val },
-                     { field: "ModuleName", operator: "contains", value: val },
-                     { field: "FormID", operator: "contains", value: val },
-                     { field: "FormName", operator: "contains", value: val },
-                     { field: "FormURL", operator: "contains", value: val },
-                    //  { field: "ViewPermission", operator: "contains", value: val },
                 ]
             });
-        });
 
-        AutoFitColumn("MainGrid");
-        var gridInput = 0;
-        function GridValidation() {
-            gridInput = 0;
-            var dataSource = $("#MainGrid").data("kendoGrid").dataSource;
-            data = dataSource.data(); // Get Detail Grid Data
-            if (dataSource.view().length > 0) {
-                gridInput = 0;
-            }
-            else {
-                gridInput = 1;
-            }
+            // Make all columns resizable
+            //dataTable.columns().every(function () {
+            //    var column = this;
+
+            //    // Make the column header resizable
+            //    $(column.header()).resizable({
+            //        handles: 'e', // Only allow resizing from the right edge
+            //        start: function (event, ui) {
+            //            // Store the original width for later use
+            //            column.data('origWidth', column.width());
+            //        },
+            //        resize: function (event, ui) {
+            //            // Adjust the column width as the user resizes
+            //            column.width(ui.size.width);
+            //        },
+            //        stop: function (event, ui) {
+            //            // Store the new width in case you need it
+            //            var newWidth = column.width();
+            //            console.log('Column width changed from ' + column.data('origWidth') + ' to ' + newWidth);
+            //        }
+            //    });
+            //});
+        }
+        $("#roleFormPermission").submit(function (event) {
+
+            var detailArr = [];
+            detailArr.length = 0;
+            var b = 0;
+            $.each($("#tblData tbody tr"), function () {
+                var saveCheckboxValue = $('#SavePermission_' + b).val();
+                var saveCheckboxClick = $('#SavePermission_' + b).is(':checked')
+                if (saveCheckboxClick == true) {
+                    saveCheckboxValue = "True"
+                }
+                else {
+                    saveCheckboxValue = "False"
+                }
+                var editCheckboxValue = $('#EditPermission_' + b).val();
+                var editCheckboxClick = $('#EditPermission_' + b).is(':checked')
+                if (editCheckboxClick == true) {
+                    editCheckboxValue = "True"
+                }
+                else {
+                    editCheckboxValue = "False"
+                }
+                var viewCheckboxValue = $('#ViewPermission_' + b).val();
+                var viewCheckboxClick = $('#ViewPermission_' + b).is(':checked')
+                if (viewCheckboxClick == true) {
+                    viewCheckboxValue = "True"
+                }
+                else {
+                    viewCheckboxValue = "False"
+                }
+                var deleteCheckboxValue = $('#DeletePermission_' + b).val();
+                var deleteCheckboxClick = $('#DeletePermission_' + b).is(':checked')
+                if (deleteCheckboxClick == true) {
+                    deleteCheckboxValue = "True"
+                }
+                else {
+                    deleteCheckboxValue = "False"
+                }
+                var hiddenSoftwareID = $("#tblData").DataTable().column(0).data();
+                var hiddenModuleID = $("#tblData").DataTable().column(2).data();
+                var hiddenFormID = $("#tblData").DataTable().column(4).data();
+
+                detailArr.push({
+                    //SoftwareID: $('#SoftwareID_' + b).val(),
+                    //ModuleID: $('#ModuleID_' + b).val(),
+                    SoftwareID: hiddenSoftwareID[b],
+                    ModuleID: hiddenModuleID[b],
+                    FormID: hiddenFormID[b],
+                    //IsActive: rowData.isActive,
+                    SavePermission: saveCheckboxValue,
+                    EditPermission: editCheckboxValue,
+                    ViewPermission: viewCheckboxValue,
+                    DeletePermission: deleteCheckboxValue,
+                });
+                console.log(detailArr);
+                b = b + 1;
+            });
+
+            //var input = InputValidation('Quantity_' + row) + InputValidation('Medicine_Name_' + row);
+            //if (input == 0) {
+            var formData = {
+                RoleID: $("#RoleID").val(),
+                DetailList: detailArr
+            };
+            //}
+
+            //alert($("#Status").val());
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("OperationsMode", "RoleInFormPermission")',
+                data: formData,
+                dataType: "json",
+                encode: true,
+            }).done(function (response) {
+                //console.log(response);
+                //alert(response.status);
+                if (response.status == 'Yes') {
+
+                    toastr.success('Data saved successfully');
+                }
+                //alert("saved");
+
+                //window.location.href = "/Transaction/Purchase?from=edit";
+
+                //toastr.success('Current Day & Time');
+                //alert("successfully updated");
+                //location.assign('@Url.Action("_ManagePurchase")');
+                //location.reload();
+            });
+
+            event.preventDefault();
+
+        });
+        LoadRole();
+        //LoadEmployee();
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        ////Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+        function LoadRole() {
+            $.ajax({
+                url: '/SA/UserInRole/GetRoles',
+                success: function (data) {
+                    $.each(data.data, function (i, item) {
+                        //console.log(data.data);
+                        //console.log(item);
+                        $("#RoleID").append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                        //$('#RoleID').append('<Option value=' + item.roleID + '>' + item.roleName + '</Option>');
+                    });
+                }
+            });
         }
 
-        $('#btnSave').click(function () {
 
-            GridValidation();
+        //function changeStatuse(sl) {
+        //    //var isActive = $('#IsActive_' + sl).val();
+        //    var isActiveCheckboxValue = $('#IsActive_' + sl).val();
+        //    var isActiveCheckboxClick = $('#IsActive_' + sl).is(':checked')
+        //    if (isActiveCheckboxClick == true) {
+        //        isActiveCheckboxValue = "True"
+        //    }
+        //    else {
+        //        isActiveCheckboxValue = "False"
+        //    }
+        //    alert(isActiveCheckboxValue);
+        //}
 
-            var Input = InputValidation('RoleID')
-            if ((Input == 0) && (gridInput == 0)) {
-
-                var dataSource = $("#MainGrid").data("kendoGrid").dataSource;
-                var filters = dataSource.filter();
-                var allData = dataSource.data();
-                var query = new kendo.data.Query(allData);
-                var data = query.filter(filters).data;            
-                master.detailsList = [];
-            
-                    for (var i = data.length - 1; i >= 0; i--) {
-                        details.RoleID = $('#RoleID').val();
-                        details.SoftwareID = data[i].SoftwareID;
-
-                        details.ModuleID = data[i].ModuleID;
-                        details.FormID = data[i].FormID;
-                        details.ViewPermission = data[i].ViewPermission;
-                        details.SavePermission = data[i].SavePermission;
-                        details.EditPermission = data[i].EditPermission;
-                        details.DeletePermission = data[i].DeletePermission;
-                        details.PrintPermission = data[i].PrintPermission;
-                        master.detailsList.push(details);
-                        details = { "RoleID": "", "SoftwareID": "", "ModuleID": "", "FormID": "", "ViewPermission": "", "SavePermission": "", "EditPermission": "", "DeletePermission": "", "PrintPermission": "" };
-
+        function Delete(data) {
+            //console.log(data);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        //url: url,
+                        //type: 'DELETE',
+                        url: "/sa/UserInRole/delete/",
+                        data: { "id": data },
+                        type: "DELETE",
+                        success: function (data) {
+                            if (data.success) {
+                                dataTable.ajax.reload();
+                                toastr.success(data.message);
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    })
                 }
-                $.ajax({
-                    url: '/RoleInFormPermission/OperationsMode',
-                    data: JSON.stringify(master),
-                    type: 'POST',
-                    contentType: 'application/json;',
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.Status == "Yes") {                           
-                            OperationMsg(data.Mode);
-                        }
-                        else {
-                            ErrorFrmServerMsg(data.Status);
-                        }
+            })
+        }
 
-                    },
-                    error: function () { ErrorFrmClientMsg(); },
-                    // complete: function () { CompletedMsg(); },
-                }); //End of ajax call
-            }
-            else {
-                ValidationMsg();
-            }
-
-        });
-        var master = { "detailsList": [] };
-        var details = { "RoleID": "", "SoftwareID": "", "ModuleID": "", "FormID": "", "ViewPermission": "", "SavePermission": "", "EditPermission": "", "DeletePermission": "", "PrintPermission": "" };
-    });
-</script>
+    </script>
+}
 
 
-        <div class="box-header with-border">@*Form Title*@
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <div id="MessageText"></div></div>
-            <div class="col-xs-0 col-sm-0 col-md-8 col-lg-8">
-                <div style="text-align:right;">
-                    <button id="btnSave" class="btn btn-primary btn-md" type="button"><i class="glyphicon glyphicon-save"></i>Save</button>
-                    @*<button id="btnView" class="btn btn-primary btn-lg" type="button"><i class="glyphicon glyphicon-search"></i>View</button>
-    <button id="btnDelete" class="btn btn-primary btn-lg" type="button"><i class="glyphicon glyphicon-trash"></i>Delete</button>*@
-                    <button id="btnReset" class="btn btn-primary btn-md" type="button"><i class="glyphicon glyphicon-refresh"></i>Reset</button>
-                </div>
-            </div>
-            </div>
 
-        <div class="box-body">@*Form Body Content*@
-            <div class="row">
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                    <div class="input-group">
-                        <span class="input-group-addon">Role:</span>
-                        <select id="RoleID" class="form-control ">@*<option> </option>*@</select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div id="MainGrid" class="MainGrid"></div>
-                </div>
-            </div>
-        </div>
-      <div class="box-footer">@*Form Footer*@</div>

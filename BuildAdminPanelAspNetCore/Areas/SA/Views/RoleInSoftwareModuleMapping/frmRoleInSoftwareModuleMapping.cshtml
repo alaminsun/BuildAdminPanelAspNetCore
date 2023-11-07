@@ -7,14 +7,11 @@
 <div class="container p-3">
 
     <div class="card">
-        <div class="card-header">
-            <div class="row pt-4">
-                <div class="col-6">
-                    <h2 class="text-primary">Role In Menu Mapping</h2>
-                </div>
-            </div>
-        </div>
+
         <form id="roleMenu" method="post">
+            <div class="card-header bg-secondary text-white text-center">
+                <h5>Role In Menu Mapping</h5>
+            </div>
             <div class="card-body">
                 <div class="form-group">
                     <label asp-for="RoleID" class="form-label mt-4">Role</label>
@@ -23,7 +20,6 @@
                     </select>
                     <span asp-validation-for="RoleID" class="text-danger"></span>
                 </div>
-                </br>
                 <table id="tblData" class="table table-bordered table-striped table-responsive" cellspacing="0" style="width:100%">
 
                     @*<table id="tblData" class="table table-bordered table-striped table-responsive" style="width:100%">*@
@@ -39,15 +35,12 @@
                     </thead>
                 </table>
             </div>
-            <button type="submit" class="btn btn-primary" style="width:200px">Save</button>
+            <div class="card-footer text-muted">
+                <button type="submit" class="btn btn-primary" style="width:300px">Save</button>
+            </div>
         </form>
     </div>
-    @*        <div class="card-foorter">
-    <div class="col-12">
-    <button type="submit" class="btn btn-primary" style="width:200px">Save</button>
-    </div>
 
-    </div>*@
 
 </div>
 

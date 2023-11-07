@@ -21,7 +21,7 @@ namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
         
         [Route("frmForm")]
         //[Route("~/")]
-        //[ActionAuth]
+        [ActionAuth]
         public IActionResult frmForm()
         {
             if (HttpContext.Session.GetString("UserID") != null)

@@ -1,49 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using RMS_Square.Areas.SA.Models.BEL;
-using RMS_Square.Areas.SA.Models.DAL.DAO;
-using System.Security.Cryptography;
-using System.Text;
-using Systems.Universal;
-using Systems.ActionFilter;
-using Systems.Controllers;
+﻿using BuildAdminPanelAspNetCore.Areas.SA.Models.BEL;
+using BuildAdminPanelAspNetCore.Areas.SA.Models.DAL.DAO;
+using Microsoft.AspNetCore.Mvc;
 
-namespace RMS_Square.Areas.SA.Controllers
+namespace BuildAdminPanelAspNetCore.Areas.SA.Controllers
 {
-    public class RoleInFormPermissionController : ControllerController
+    [Area("SA")]
+    [Route("SA/RoleInFormPermission")]
+    public class RoleInFormPermissionController : Controller
     {
         RoleInFormDAO primaryDAO = new RoleInFormDAO();
-    
+
         // GET: /SA/RoleInSoftwareModuleFormMapping/
-        [ActionAuth]
+        //[ActionAuth]
+        [Route("frmRoleInFormPermission")]
         public ActionResult frmRoleInFormPermission()
         {
-            if (Session["UserID"] != null)
+            if (HttpContext.Session.GetString("UserID") != null)
             {
                 return View();
             }
-            return Redirect(string.Format("~/Home/frmHome"));
+            return Redirect(string.Format("~/Home/frmRole"));
         }
-        [AcceptVerbs(HttpVerbs.Post)]
+        
+
+        [HttpPost]
+        [Route("GetRoleInFormPermissionList")]
         public ActionResult GetRoleInFormPermissionList(string RoleID)
         {
-            var model = GetRoleInFormPermission(RoleID);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            var roleInFormPermissionList = primaryDAO.GetRoleInFormPermissionList(RoleID);
+            //return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(data: roleInFormPermissionList);
         }
-        public ActionResult OperationsMode(RoleInFormBEL master)
+        [HttpPost]
+        [Route("OperationsMode")]
+        public ActionResult OperationsMode(RoleInFormMaster master)
         {
             try
             {
-               
+
                 if (primaryDAO.SaveUpdate(master))
                 {
                     return Json(new { ID = primaryDAO.MaxID, Mode = primaryDAO.IUMode, Status = "Yes" });
                 }
                 else
-                    return View("frmRole");
+                    return View("frmRoleInFormPermission");
+                //return Json(new { ID = primaryDAO.MaxID, Mode = primaryDAO.IUMode, Status = "Yes" });
             }
             catch (Exception e)
             {
